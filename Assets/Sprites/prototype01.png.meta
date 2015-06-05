@@ -1,0 +1,135 @@
+fileFormatVersion: 2
+guid: c5205e9d842af407583a17e6dff424ca
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: prototype01_0
+    21300002: prototype01_1
+    21300004: prototype01_2
+    21300006: prototype01_3
+    21300008: prototype01_4
+    21300010: prototype01_5
+    21300012: prototype01_6
+    21300014: prototype01_7
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: prototype01_0
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 2354
+        width: 377
+        height: 896
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: prototype01_1
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 2338
+        width: 378
+        height: 911
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: prototype01_2
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 2315
+        width: 374
+        height: 935
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: prototype01_3
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 2564
+        width: 206
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: prototype01_4
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 1310
+        width: 374
+        height: 934
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: prototype01_5
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 1287
+        width: 374
+        height: 957
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: prototype01_6
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1307
+        width: 374
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: prototype01_7
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 2125
+        width: 206
+        height: 342
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
