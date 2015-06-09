@@ -4,18 +4,38 @@ using System.Collections.Generic;
 
 public class BulletCreate : MonoBehaviour {
 
-	public float fireTime = 0.05f;
+	public float fireTime = 0.25f;
+
+	public ObjectPoolerScript poolerScript;
+	public GameObject pooledObject;
+	public int pooledAmount = 20;
+	public bool willGrow = true;
+
+
+	public int test=0;
+
+	//ObjectPoolerScript objP;
 
 	// Use this for initialization
 	void Start () {
 
 		InvokeRepeating ("Shoot", fireTime, fireTime);
+
+//		objP = new ObjectPoolerScript (pooledObj);
+
+		//var objPool = PoolerReference.GetComponent<ObjectPoolerScript> ();
+
+		
+		poolerScript.pooledObject = GameObject.Find("Bullet");
+		poolerScript.start ();
 	
 	}
 
 	void Shoot()
 	{
-		GameObject obj = ObjectPooler.current.getPooledObject ();
+		//GameObject obj = ObjectPoolerScript.current.getPooledObject ();
+
+		GameObject obj = poolerScript.getPooledObject ();
 
 		if (obj == null)
 			return;
@@ -25,11 +45,20 @@ public class BulletCreate : MonoBehaviour {
 		obj.SetActive (true);
 	}
 
+
+//	public float fireTime = 0.25f;
+//	public GameObject bullet;
 //
-//	// Update is called once per frame
-//	void Update () {
+//	void Start()
+//	{
+//		InvokeRepeating ("Fire", 2f, fireTime);
 //
-//
-//	
 //	}
+//
+//	void Fire()
+//	{
+//		Debug.Log("Fire");
+//		Instantiate (bullet, transform.position, Quaternion.identity);
+//	}
+
 }

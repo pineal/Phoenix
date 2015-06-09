@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ObjectPooler : MonoBehaviour {
+public class ObjectPoolerScript : MonoBehaviour {
 
-	public static ObjectPooler current;
+	public static ObjectPoolerScript current;
 	public GameObject pooledObject;
 	public int pooledAmount = 20;
 
@@ -18,7 +18,7 @@ public class ObjectPooler : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	public void start () {
 	
 		pooledObjects = new List<GameObject> ();
 

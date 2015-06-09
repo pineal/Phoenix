@@ -3,9 +3,9 @@ using System.Collections;
 
 public class BulletDestroy : MonoBehaviour {
 
-	void onEnable()
+	void OnEnable()
 	{
-		Invoke ("Destroy", 1.5f);
+		Invoke ("Destroy", 2.5f);
 	}
 
 	void Destroy()
@@ -13,7 +13,12 @@ public class BulletDestroy : MonoBehaviour {
 		gameObject.SetActive (false);
 	}
 
-	void onDisable()
+//	void Destroy()
+//	{
+//		Destroy (gameObject, 2f);
+//	}
+
+	void OnDisable()
 	{
 		CancelInvoke();
 	}

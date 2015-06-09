@@ -7,7 +7,11 @@ public class PlayerMovement : MonoBehaviour {
 	public double kHook = 10.0;
 	public double kDamp = 50.0;
 
+	private float shipBoundaryX = 0.5f;
+	private float shipBoundaryY = 0.7f;
+
 	public Text debugText;
+
 
 	// Use this for initialization
 	void Start () {
@@ -15,16 +19,38 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-//	void Update () {
-//	
-//	}
-
 	void FixedUpdate () {
+	
+	}
+
+	void Update () {
 
 		if (Input.GetButton ("Fire1")) {
-			Debug.Log ("fire button");
+			//Debug.Log ("fire button");
 
-			var mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+			Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+			mousePos.y += 0.5f;
+
+
+			//Vertical Movement Restrictions
+			if (mousePos.y + shipBoundaryY > Camera.main.orthographicSize) {
+				mousePos.y = Camera.main.orthographicSize - shipBoundaryY;
+			}
+			if (mousePos.y - shipBoundaryY < -Camera.main.orthographicSize) {
+				mousePos.y = -Camera.main.orthographicSize + shipBoundaryY;
+			}
+
+			//Horizontal Movement Restrictions
+			float screenRatio = (float)Screen.width / (float)Screen.height;
+			float cameraWidth = Camera.main.orthographicSize * screenRatio;
+
+			if (mousePos.x + shipBoundaryX > cameraWidth) {
+				mousePos.x = cameraWidth - shipBoundaryX;
+			}
+			if (mousePos.x - shipBoundaryX < -cameraWidth) {
+				mousePos.x = -cameraWidth + shipBoundaryX;
+			}
+
 			var myPos = transform.position;
 
 			rigidbody2D.velocity.Set (0, 0);
@@ -43,8 +69,9 @@ public class PlayerMovement : MonoBehaviour {
 			dampingForce = (float)((-kDamp) * Vector3.Dot ((myVelocity), vectorToPlayer) / dist) * (vectorToPlayer / (float)dist);
 
 
-
 			rigidbody2D.AddForce (elasticForce + dampingForce);
+
+
 
 
 		} 
@@ -74,6 +101,9 @@ public class PlayerMovement : MonoBehaviour {
 			"Force: " + 	force.x.ToString("#.00") + ", " + 
 							force.y.ToString("#.00") + ", " + 
 							force.z.ToString("#.00") + "\n" +
+			"Velocity: " + 	curVel.x.ToString("#.00") + ", " + 
+							curVel.y.ToString("#.00") + ", " + 
+							curVel.z.ToString("#.00") + "\n" +
 						"";
 	}
 
