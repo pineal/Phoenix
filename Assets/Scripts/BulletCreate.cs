@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class BulletCreate : MonoBehaviour {
 
-	public float fireTime = 0.25f;
+	public float fireTime = 0.1f;
 
 	public ObjectPoolerScript poolerScript;
 	public GameObject pooledObject;
@@ -19,16 +19,13 @@ public class BulletCreate : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		poolerScript.pooledObject = pooledObject;
+		poolerScript.pooledAmount = pooledAmount;
+		poolerScript.willGrow = willGrow;
+		poolerScript.start ();
+
 		InvokeRepeating ("Shoot", fireTime, fireTime);
 
-//		objP = new ObjectPoolerScript (pooledObj);
-
-		//var objPool = PoolerReference.GetComponent<ObjectPoolerScript> ();
-
-		
-		poolerScript.pooledObject = GameObject.Find("Bullet");
-		poolerScript.start ();
-	
 	}
 
 	void Shoot()
