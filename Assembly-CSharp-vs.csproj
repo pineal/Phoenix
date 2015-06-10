@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\BulletCreate.cs" />
      <Compile Include="Assets\Scripts\BulletDestroy.cs" />
+     <Compile Include="Assets\Scripts\BulletManager.cs" />
      <Compile Include="Assets\Scripts\BulletMove.cs" />
      <Compile Include="Assets\Scripts\CameraShake.cs" />
      <Compile Include="Assets\Scripts\DamageScript.cs" />

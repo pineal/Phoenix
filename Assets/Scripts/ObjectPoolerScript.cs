@@ -4,9 +4,28 @@ using System.Collections.Generic;
 
 public class ObjectPoolerScript : MonoBehaviour {
 
-	public static ObjectPoolerScript current;
-	public GameObject pooledObject;
-	public int pooledAmount = 20;
+	//public static ObjectPoolerScript current;
+
+	private GameObject pooledObject;
+	public GameObject PooledObject{ 
+
+		get
+		{
+			return pooledObject;
+		}
+
+		set
+		{
+			pooledObject = value;
+		}
+	}
+
+
+	private int pooledAmount = 20;
+	public int PooledAmount {
+		get;
+		set;
+	}
 
 	public bool willGrow = true;
 
@@ -14,7 +33,7 @@ public class ObjectPoolerScript : MonoBehaviour {
 
 	void Awake()
 	{
-		current = this;
+		//current = this;
 	}
 
 	// Use this for initialization
@@ -49,5 +68,13 @@ public class ObjectPoolerScript : MonoBehaviour {
 		}
 
 		return null;
+	}
+
+	public void killObjects()
+	{
+		for (int i=0; i<pooledObjects.Count; ++i) {
+			
+			Destroy(pooledObjects[i]);
+		}
 	}
 }

@@ -11,47 +11,94 @@ public class BulletCreate : MonoBehaviour {
 	public int pooledAmount = 20;
 	public bool willGrow = true;
 
-
 	public int test=0;
 
 	private GameObject objParent = null;
+	private BulletManager bullMgr = null;
+
+	private string parentTag;
+
+	private int burstAmt = 0;
+	private float burstInterval =0f;
 
 	//ObjectPoolerScript objP;
 
 	// Use this for initialization
 	void Start () {
 
-		poolerScript.pooledObject = pooledObject;
-		poolerScript.pooledAmount = pooledAmount;
+		bullMgr = GetComponent<BulletManager> ();
+
+		parentTag = transform.parent.tag;
+
+		poolerScript.PooledObject = pooledObject;
+		poolerScript.PooledAmount = pooledAmount;
 		poolerScript.willGrow = willGrow;
 		poolerScript.start ();
 
-		InvokeRepeating ("Shoot", fireTime*10f, fireTime);
+		fireTime = bullMgr.fireInterval;
+
+		burstAmt = bullMgr.burstAmt;
+		burstInterval = bullMgr.burstInterval;
+
+//		if (parentTag [0] == 'E') { 	//Enemy
+//			InvokeRepeating ("Shoot", fireTime * 10f, fireTime * 5f);
+//		} else {						//Player
+//			InvokeRepeating ("Shoot", fireTime * 10f, fireTime);
+//		}
+
+		//InvokeRepeating ("Shoot", fireTime * 10f, fireTime);
+
+		StartCoroutine ( Shoot(fireTime * 10f, burstInterval) );
 
 	}
 
-	void Shoot()
+	//void ShootReal()
+	IEnumerator Shoot(float initWait, float burstInt)
 	{
 		//GameObject obj = ObjectPoolerScript.current.getPooledObject ();
+		yield return new WaitForSeconds (initWait);
 
-		if (!this.enabled)
-			return;
+		while (true) {
 
-		GameObject obj = poolerScript.getPooledObject ();
+			if (!this.enabled)
+			{
+				yield return null;
+				continue;
+			}
 
-		BulletMove moveObj = GetComponentInChildren<BulletMove> ();
+			for(int i=0; i<burstAmt || burstAmt==0; ++i)
+			{
+				GameObject obj = poolerScript.getPooledObject ();
 
-		if (obj == null)
-			return;
+				BulletMove moveObj = obj.GetComponent<BulletMove> ();
 
-		if(objParent == null)
-			objParent = transform.parent.gameObject;
+				//if (parentTag[0] == 'E')
+				{
+					moveObj.Damage = bullMgr.damage;
+					moveObj.Speed = bullMgr.speed;
+					moveObj.Type = bullMgr.type;
+					moveObj.ProbabilityOfDamage = bullMgr.prob;
+				}
 
-		obj.layer = objParent.layer;
+				if (obj == null)
+				{
+					yield return null;
+					continue;
+				}
 
-		obj.transform.position = transform.position;
-		obj.transform.rotation = transform.rotation;
-		obj.SetActive (true);
+				if (objParent == null)
+					objParent = transform.parent.gameObject;
+
+				obj.layer = objParent.layer;
+
+				obj.transform.position = transform.position;
+				obj.transform.rotation = transform.rotation;
+				obj.SetActive (true);
+
+				yield return new WaitForSeconds(fireTime);
+			}
+			yield return new WaitForSeconds(burstInterval);
+		}
 	}
 
 
@@ -69,5 +116,11 @@ public class BulletCreate : MonoBehaviour {
 //		Debug.Log("Fire");
 //		Instantiate (bullet, transform.position, Quaternion.identity);
 //	}
+
+	void OnDestroy()
+	{
+		if(poolerScript != null)
+			poolerScript.killObjects ();
+	}
 
 }
