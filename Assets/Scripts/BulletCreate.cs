@@ -14,6 +14,8 @@ public class BulletCreate : MonoBehaviour {
 
 	public int test=0;
 
+	private GameObject objParent = null;
+
 	//ObjectPoolerScript objP;
 
 	// Use this for initialization
@@ -24,7 +26,7 @@ public class BulletCreate : MonoBehaviour {
 		poolerScript.willGrow = willGrow;
 		poolerScript.start ();
 
-		InvokeRepeating ("Shoot", fireTime, fireTime);
+		InvokeRepeating ("Shoot", fireTime*10f, fireTime);
 
 	}
 
@@ -32,10 +34,20 @@ public class BulletCreate : MonoBehaviour {
 	{
 		//GameObject obj = ObjectPoolerScript.current.getPooledObject ();
 
+		if (!this.enabled)
+			return;
+
 		GameObject obj = poolerScript.getPooledObject ();
+
+		BulletMove moveObj = GetComponentInChildren<BulletMove> ();
 
 		if (obj == null)
 			return;
+
+		if(objParent == null)
+			objParent = transform.parent.gameObject;
+
+		obj.layer = objParent.layer;
 
 		obj.transform.position = transform.position;
 		obj.transform.rotation = transform.rotation;

@@ -18,6 +18,12 @@ public class BulletDestroy : MonoBehaviour {
 //		Destroy (gameObject, 2f);
 //	}
 
+	void OnTriggerEnter2D(Collider2D coll)
+	{
+		Debug.Log ("Collider: " + coll.name);
+		gameObject.SetActive (false);
+	}
+
 	void OnDisable()
 	{
 		CancelInvoke();

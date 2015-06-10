@@ -3,7 +3,9 @@ using System.Collections;
 
 public class BulletMove : MonoBehaviour {
 
-	public float speed = 5;
+	private float speed = 5;
+	private float damage = 1;
+
 
 	// Use this for initialization
 	void Start () {

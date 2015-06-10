@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\BulletMove.cs" />
      <Compile Include="Assets\Scripts\CameraShake.cs" />
      <Compile Include="Assets\Scripts\DamageScript.cs" />
+     <Compile Include="Assets\Scripts\EnemyAirMovement.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Loader.cs" />
      <Compile Include="Assets\Scripts\ObjectPoolerScript.cs" />
