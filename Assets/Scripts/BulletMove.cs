@@ -3,8 +3,8 @@ using System.Collections;
 
 public class BulletMove : MonoBehaviour {
 
-	private float damage = 1f;
-	public float Damage{ 
+	private int damage = 1;
+	public int Damage{ 
 		get{ return damage; } 
 		set{ damage = value; }
 	}
