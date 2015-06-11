@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerScript : MonoBehaviour {
 
 	public double kHook = 10.0;
 	public double kDamp = 50.0;

@@ -4,7 +4,7 @@ using System.Collections;
 public class DamageScript : MonoBehaviour {
 
 	private GameObject player = null;
-	private PlayerMovement playerScript = null;
+	private PlayerScript playerScript = null;
 
 	public float health = 10f;
 
@@ -29,7 +29,9 @@ public class DamageScript : MonoBehaviour {
 
 		if (player == null) {
 			player = GameObject.Find("Player");
-			playerScript = player.GetComponent<PlayerMovement>();
+
+			if (player != null)
+				playerScript = player.GetComponent<PlayerScript>();
 		}
 	}
 
@@ -41,10 +43,17 @@ public class DamageScript : MonoBehaviour {
 		if (collider.name.Substring (0, 4) == "Bull") {
 			int damage = collider.GetComponent<BulletMove>().Damage;
 			health -= damage;
-			GameManager.instance.UpdateScore(damage);
+
+			if(playerScript != null)
+			{
+				playerScript.Score += damage;
+			}
 		} else {
 			health -= 1f;
-			GameManager.instance.UpdateScore(1);
+			if(playerScript != null)
+			{
+				playerScript.Score += 1;
+			}
 		}
 
 
@@ -74,9 +83,14 @@ public class DamageScript : MonoBehaviour {
 
 	void Die()
 	{
-		GameManager.instance.UpdateScore (deathPoints);
-		if (!isPlayer)
+		if(playerScript != null)
+		{
+			playerScript.Score += deathPoints;
+		}
+		if (!isPlayer) {
 			Destroy (gameObject);
+			GameManager.instance.EnemyDestroyed();
+		}	
 		else
 			GameManager.instance.GameOver ();
 	}
