@@ -46,14 +46,16 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BackrgoundScrolling.cs" />
      <Compile Include="Assets\Scripts\BulletCreate.cs" />
+     <Compile Include="Assets\Scripts\BulletCreateSuper.cs" />
      <Compile Include="Assets\Scripts\BulletDestroy.cs" />
-     <Compile Include="Assets\Scripts\BulletManager.cs" />
      <Compile Include="Assets\Scripts\BulletMove.cs" />
      <Compile Include="Assets\Scripts\CameraShake.cs" />
      <Compile Include="Assets\Scripts\DamageScript.cs" />
      <Compile Include="Assets\Scripts\EnemyAirMovement.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\GunManager.cs" />
      <Compile Include="Assets\Scripts\Loader.cs" />
      <Compile Include="Assets\Scripts\ObjectPoolerScript.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />

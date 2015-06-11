@@ -12,10 +12,19 @@ public class PlayerMovement : MonoBehaviour {
 
 	public Text debugText;
 
+	private int score = 0;
+
+	public int Score{
+		get{ return score; }
+		set{ score = value; }
+	}
+
 
 	// Use this for initialization
 	void Start () {
 	
+		score = GameManager.instance.PlayerScore;
+
 	}
 	
 	// Update is called once per frame
@@ -104,7 +113,14 @@ public class PlayerMovement : MonoBehaviour {
 			"Velocity: " + 	curVel.x.ToString("#.00") + ", " + 
 							curVel.y.ToString("#.00") + ", " + 
 							curVel.z.ToString("#.00") + "\n" +
+			"Score: " + 	score					 + "\n" +
+
 						"";
 	}
 
+
+	private void OnDisable()
+	{
+		GameManager.instance.PlayerScore = score;
+	}
 }

@@ -14,19 +14,22 @@ public class BulletCreate : MonoBehaviour {
 	public int test=0;
 
 	private GameObject objParent = null;
-	private BulletManager bullMgr = null;
+	private GunManager gunMgr = null;
 
 	private string parentTag;
 
 	private int burstAmt = 0;
 	private float burstInterval =0f;
 
+
+
+
 	//ObjectPoolerScript objP;
 
 	// Use this for initialization
 	void Start () {
 
-		bullMgr = GetComponent<BulletManager> ();
+		gunMgr = GetComponentInParent<GunManager> ();
 
 		parentTag = transform.parent.tag;
 
@@ -35,10 +38,10 @@ public class BulletCreate : MonoBehaviour {
 		poolerScript.willGrow = willGrow;
 		poolerScript.start ();
 
-		fireTime = bullMgr.fireInterval;
+		fireTime = gunMgr.fireInterval;
 
-		burstAmt = bullMgr.burstAmt;
-		burstInterval = bullMgr.burstInterval;
+		burstAmt = gunMgr.burstAmt;
+		burstInterval = gunMgr.burstInterval;
 
 //		if (parentTag [0] == 'E') { 	//Enemy
 //			InvokeRepeating ("Shoot", fireTime * 10f, fireTime * 5f);
@@ -48,12 +51,12 @@ public class BulletCreate : MonoBehaviour {
 
 		//InvokeRepeating ("Shoot", fireTime * 10f, fireTime);
 
-		StartCoroutine ( Shoot(fireTime * 10f, burstInterval) );
+		//StartCoroutine ( Shoot(fireTime * 10f, burstInterval) );
 
 	}
 
 	//void ShootReal()
-	IEnumerator Shoot(float initWait, float burstInt)
+	public IEnumerator Shoot(float initWait, float burstInt)
 	{
 		//GameObject obj = ObjectPoolerScript.current.getPooledObject ();
 		yield return new WaitForSeconds (initWait);
@@ -74,10 +77,10 @@ public class BulletCreate : MonoBehaviour {
 
 				//if (parentTag[0] == 'E')
 				{
-					moveObj.Damage = bullMgr.damage;
-					moveObj.Speed = bullMgr.speed;
-					moveObj.Type = bullMgr.type;
-					moveObj.ProbabilityOfDamage = bullMgr.prob;
+					moveObj.Damage = gunMgr.damage;
+					moveObj.Speed = gunMgr.speed;
+					moveObj.Type = gunMgr.type;
+					moveObj.ProbabilityOfDamage = gunMgr.prob;
 				}
 
 				if (obj == null)
@@ -94,6 +97,10 @@ public class BulletCreate : MonoBehaviour {
 				obj.transform.position = transform.position;
 				obj.transform.rotation = transform.rotation;
 				obj.SetActive (true);
+
+				Animator animator = obj.GetComponent<Animator>();
+
+				animator.SetInteger("bulletType", gunMgr.type);
 
 				yield return new WaitForSeconds(fireTime);
 			}
