@@ -29,4 +29,7 @@ OS generated
 .Trashes
 ehthumbs.db
 Thumbs.db
+<<<<<<< HEAD
 *.csproj
+=======
+>>>>>>> master
