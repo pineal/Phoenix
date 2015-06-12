@@ -17,6 +17,10 @@ public class EnemyAir : MonoBehaviour {
 
 	private Transform myTransform;
 
+	//For Rotate
+	private bool isRotate = false;
+	private int thresholdHealth = 0;
+	private DamageScript damSc;
 
 	//For Move
 	private int moveType = 0;
@@ -42,6 +46,9 @@ public class EnemyAir : MonoBehaviour {
 		topOfScreen = Camera.main.orthographicSize;
 		rightOfScreen = Camera.main.orthographicSize * ( (float)Screen.width/(float)Screen.height );
 
+		//For Rotate
+		damSc = GetComponent<DamageScript> ();
+		thresholdHealth = (int)(0.6f * damSc.health);
 
 		//For Move
 		left = new Vector3(-rightOfScreen+0.75f, topOfScreen-1.5f, 4f );
@@ -105,11 +112,26 @@ public class EnemyAir : MonoBehaviour {
 			}
 		}
 
+		if(isRotate)
+			Rotate ();
+
 		if(onBoard)
 			Move ();
 
 	}
 
+	public void CheckRotate()
+	{
+		if (damSc.health <= thresholdHealth && !isRotate) {
+
+			isRotate = (Random.Range(0,10) <= 6) ? true : false;		//30% Chance to Rotate
+		}
+	}
+
+	void Rotate()
+	{
+		myTransform.Rotate (Vector3.forward * (-180 * Time.deltaTime), Space.World);
+	}
 
 	void Move()
 	{

@@ -195,6 +195,7 @@ public class GameManager : MonoBehaviour {
 
 	IEnumerator EnemySpawner ()
 	{
+		yield return new WaitForSeconds (3f);
 		for (int i=spawnedEnemies; i<needToSpawn; ++i) {
 			//Get Spawn Point
 			int spawnIndex = Random.Range(0, spawnPoints.Count);

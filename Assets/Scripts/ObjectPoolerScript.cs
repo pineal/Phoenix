@@ -74,7 +74,8 @@ public class ObjectPoolerScript : MonoBehaviour {
 	{
 		for (int i=0; i<pooledObjects.Count; ++i) {
 			
-			Destroy(pooledObjects[i]);
+			Destroy(pooledObjects[i], 2f);
 		}
 	}
+
 }
