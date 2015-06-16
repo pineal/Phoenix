@@ -17,19 +17,29 @@ public class EnemyAir : MonoBehaviour {
 
 	private Transform myTransform;
 
+<<<<<<< HEAD
+	private float angle =0;
+	private float speed = (2 * Mathf.PI) / 5; //2*PI in degress is 360, so you get 5 seconds to complete a circle
+	private float radius=1.5f;
+	private float x, y;
+	Vector3 newPosition;
+	
+	
+=======
 	//For Rotate
 	private bool isRotate = false;
 	private int thresholdHealth = 0;
 	private DamageScript damSc;
 
+>>>>>>> origin/master
 	//For Move
-	private int moveType = 0;
+	private int moveType = 1;
 		public int MoveType{
 			get{ return moveType; }
 			set{ moveType = value; }
 		}
 	private bool flag = false;
-	Vector3 left, right;
+	Vector3 left, right, top;
 
 	void Start()
 	{
@@ -53,7 +63,7 @@ public class EnemyAir : MonoBehaviour {
 		//For Move
 		left = new Vector3(-rightOfScreen+0.75f, topOfScreen-1.5f, 4f );
 		right = new Vector3(rightOfScreen-0.75f, topOfScreen-1.5f, 4f );
-
+		top = new Vector3 (0 ,topOfScreen, 4f);
 		if (myTransform.position.y > topOfScreen)
 			onBoard = false;
 	}
@@ -112,12 +122,21 @@ public class EnemyAir : MonoBehaviour {
 			}
 		}
 
+<<<<<<< HEAD
+		if (onBoard)
+			myTransform.position = Vector3.MoveTowards(myTransform.position, top, 10*Time.deltaTime);
+			//Move ();
+		//	myTransform.position = Vector3.MoveTowards(myTransform.position, top, 10*Time.deltaTime);
+			MoveCirclely ();
+		
+=======
 		if(isRotate)
 			Rotate ();
 
 		if(onBoard)
 			Move ();
 
+>>>>>>> origin/master
 	}
 
 	public void CheckRotate()
@@ -136,10 +155,9 @@ public class EnemyAir : MonoBehaviour {
 	void Move()
 	{
 		//Deal with Level specific Movements.
-		switch (moveType) {
+	switch (moveType) {
 
 		case 0:
-
 			if (flag)
 			{	//Move Right
 				if( (myTransform.position.x - right.x) >= -0.005f && (myTransform.position.x - right.x) <= 0.005f )
@@ -166,9 +184,26 @@ public class EnemyAir : MonoBehaviour {
 					myTransform.position = Vector3.MoveTowards(myTransform.position, left, 2*Time.deltaTime);
 				}
 			}
-			
+			break;
+		
+		case 1:
+			MoveCirclely();
 			break;
 		}
 
+	}
+
+	void MoveCirclely(){
+
+
+
+		angle += speed*Time.deltaTime; //if you want to switch direction, use -= instead of +=
+		x = Mathf.Cos(angle)*radius;
+		y = Mathf.Sin(angle)*radius;
+
+		newPosition = new Vector3(x, y, 4f );
+		myTransform.position = Vector3.MoveTowards(myTransform.position, newPosition, 10*Time.deltaTime);
+
+		
 	}
 }
