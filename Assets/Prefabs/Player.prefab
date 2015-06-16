@@ -256,7 +256,7 @@ MonoBehaviour:
   willGrow: 0
 --- !u!114 &11425822
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 185706}
@@ -294,9 +294,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ada16631ff334f65982f02cca49ee48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kHook: 250
-  kDamp: 10
+  kHook: 500
+  kDamp: 30
   debugText: {fileID: 0}
+  scoreText: {fileID: 0}
 --- !u!212 &21285706
 SpriteRenderer:
   m_ObjectHideFlags: 1

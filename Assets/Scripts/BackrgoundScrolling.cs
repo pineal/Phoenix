@@ -4,17 +4,20 @@ using System.Collections;
 public class BackrgoundScrolling : MonoBehaviour {
 
 	public float scrollSpeed;
-	private Vector3 startPosition;
+	public Vector3 startPosition;
+	private Transform myTransform;
 	
 	// Use this for initialization
 	void Start () {
-		startPosition = transform.position;
+
+		myTransform = transform;
+		startPosition = myTransform.position;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		float newPosition = Mathf.Repeat(Time.time * scrollSpeed, 20.0f);
-		transform.position = startPosition + Vector3.up * newPosition;
+		myTransform.position = startPosition + Vector3.up * newPosition;
 	}
 }
 

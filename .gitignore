@@ -29,7 +29,11 @@ OS generated
 .Trashes
 ehthumbs.db
 Thumbs.db
-<<<<<<< HEAD
+
+======
+Custom
+======
+PhoenixBuild/
 *.csproj
+*.sln
 =======
->>>>>>> master
