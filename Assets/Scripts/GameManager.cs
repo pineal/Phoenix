@@ -32,7 +32,8 @@ public class GameManager : MonoBehaviour {
 	private int spawnedEnemies = 0, destroyedEnemies = 0, needToSpawn = 0;
 	private bool spawnBigBoss = false;
 
-	private GameObject player;
+	private GameObject player = null;
+	private GunManager playerGunMgr = null;
 
 	private int gameStatus = 0;		//0 - inactive, 1 - active, 2 - end of game
 
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour {
 
 		//Get Player
 		player = GameObject.Find("Player");
+		playerGunMgr = player.GetComponentInChildren<GunManager> ();
 
 		GameObject[] spawners = GameObject.FindGameObjectsWithTag ("EnemySpawn");
 
@@ -116,6 +118,12 @@ public class GameManager : MonoBehaviour {
 
 			case 1:		// Stage 1
 			{
+				if ( (playerGunMgr.gunLevel & 1) == 0 )		//LSB == Gun[2];
+				{
+					playerGunMgr.gunLevel = playerGunMgr.gunLevel | 129;
+					playerGunMgr.ActivatePlayerGun();
+				}
+
 				if (needToSpawn == 0 || needToSpawn == 3) {
 					needToSpawn += 3;
 					break;

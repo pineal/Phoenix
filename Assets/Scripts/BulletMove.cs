@@ -3,7 +3,9 @@ using System.Collections;
 
 public class BulletMove : MonoBehaviour {
 
-	private int bulletType;
+	private Transform myTransform;
+
+	private int bulletType = -1;
 	private int damage = 1;
 	private Transform left;
 	private Transform right;
@@ -31,7 +33,11 @@ public class BulletMove : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		bulletType = 1;	//strait line
+
+		myTransform = transform;
+
+		if(bulletType < 0)		//In case no bullet Type was set.
+			bulletType = 1;	//strait line
 		//bulletType = 2;	//Sine waveform
 		//bulletType = 3;	//45, 90, 135 degree
 		//left  = Instantiate(transform, transform.position, Quaternion.identity) as Transform ;
@@ -42,7 +48,7 @@ public class BulletMove : MonoBehaviour {
 	void Update () {
 
 		if (bulletType == 1) {
-			transform.position += speed * Time.deltaTime * transform.up;
+			myTransform.position += speed * Time.deltaTime * transform.up;
 		} else if (bulletType == 2) {
 			float frequency = 1.0f;
 			int amplitude = 1;
