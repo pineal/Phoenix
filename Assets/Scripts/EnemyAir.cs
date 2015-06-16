@@ -17,7 +17,7 @@ public class EnemyAir : MonoBehaviour {
 
 	private Transform myTransform;
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	private float angle =0;
 	private float speed = (2 * Mathf.PI) / 5; //2*PI in degress is 360, so you get 5 seconds to complete a circle
 	private float radius=1.5f;
@@ -25,15 +25,15 @@ public class EnemyAir : MonoBehaviour {
 	Vector3 newPosition;
 	
 	
-=======
+//=======
 	//For Rotate
 	private bool isRotate = false;
 	private int thresholdHealth = 0;
 	private DamageScript damSc;
 
->>>>>>> origin/master
+//>>>>>>> origin/master
 	//For Move
-	private int moveType = 1;
+	private int moveType = 0;
 		public int MoveType{
 			get{ return moveType; }
 			set{ moveType = value; }
@@ -122,21 +122,11 @@ public class EnemyAir : MonoBehaviour {
 			}
 		}
 
-<<<<<<< HEAD
-		if (onBoard)
-			myTransform.position = Vector3.MoveTowards(myTransform.position, top, 10*Time.deltaTime);
-			//Move ();
-		//	myTransform.position = Vector3.MoveTowards(myTransform.position, top, 10*Time.deltaTime);
-			MoveCirclely ();
-		
-=======
 		if(isRotate)
 			Rotate ();
 
 		if(onBoard)
 			Move ();
-
->>>>>>> origin/master
 	}
 
 	public void CheckRotate()
@@ -187,6 +177,7 @@ public class EnemyAir : MonoBehaviour {
 			break;
 		
 		case 1:
+			//myTransform.position = Vector3.MoveTowards(myTransform.position, top, 10*Time.deltaTime);
 			MoveCirclely();
 			break;
 		}
