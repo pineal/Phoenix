@@ -5,6 +5,7 @@ public class DamageScript : MonoBehaviour {
 
 	private GameObject player = null;
 	private PlayerScript playerScript = null;
+	private EnemyAir enemyAirScript = null;
 
 	public float health = 10f;
 
@@ -23,6 +24,7 @@ public class DamageScript : MonoBehaviour {
 		if (transform.name.Substring (0, 3) == "Ene") {		//!!! Modify for various Enemies
 			deathPoints = 10;
 			isPlayer = false;
+			enemyAirScript = GetComponent<EnemyAir>();
 		} else {
 			isPlayer = true;
 		}
@@ -40,22 +42,39 @@ public class DamageScript : MonoBehaviour {
 	{
 		Debug.Log ("Trigger Collider: "+collider.name);
 
-		if (collider.name.Substring (0, 4) == "Bull") {
-			int damage = collider.GetComponent<BulletMove>().Damage;
-			health -= damage;
+		switch (isPlayer) {
+		case false:
+			if (collider.name.Substring (0, 4) == "Bull") {
+				int damage = collider.GetComponent<BulletMove> ().Damage;
+				health -= damage;
 
-			if(playerScript != null)
-			{
-				playerScript.Score += damage;
+				if (playerScript != null) {
+					playerScript.Score += damage;
+				}
+			} else {
+				health -= 1f;
+				if (playerScript != null) {
+					playerScript.Score += 1;
+				}
 			}
-		} else {
-			health -= 1f;
-			if(playerScript != null)
-			{
-				playerScript.Score += 1;
+			enemyAirScript.CheckRotate();
+			break;
+		case true:
+			if (collider.name.Substring (0, 4) == "Bull") {
+				int damage = collider.GetComponent<BulletMove> ().Damage;
+				//health -= damage;
+				
+				if (playerScript != null) {
+					playerScript.Score -= damage;
+				}
+			} else {
+				//health -= 1f;
+				if (playerScript != null) {
+					playerScript.Score -= 5;
+				}
 			}
+			break;
 		}
-
 
 
 

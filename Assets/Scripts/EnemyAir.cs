@@ -17,6 +17,7 @@ public class EnemyAir : MonoBehaviour {
 
 	private Transform myTransform;
 
+<<<<<<< HEAD
 	private float angle =0;
 	private float speed = (2 * Mathf.PI) / 5; //2*PI in degress is 360, so you get 5 seconds to complete a circle
 	private float radius=1.5f;
@@ -24,6 +25,13 @@ public class EnemyAir : MonoBehaviour {
 	Vector3 newPosition;
 	
 	
+=======
+	//For Rotate
+	private bool isRotate = false;
+	private int thresholdHealth = 0;
+	private DamageScript damSc;
+
+>>>>>>> origin/master
 	//For Move
 	private int moveType = 1;
 		public int MoveType{
@@ -48,6 +56,9 @@ public class EnemyAir : MonoBehaviour {
 		topOfScreen = Camera.main.orthographicSize;
 		rightOfScreen = Camera.main.orthographicSize * ( (float)Screen.width/(float)Screen.height );
 
+		//For Rotate
+		damSc = GetComponent<DamageScript> ();
+		thresholdHealth = (int)(0.6f * damSc.health);
 
 		//For Move
 		left = new Vector3(-rightOfScreen+0.75f, topOfScreen-1.5f, 4f );
@@ -111,14 +122,35 @@ public class EnemyAir : MonoBehaviour {
 			}
 		}
 
+<<<<<<< HEAD
 		if (onBoard)
 			myTransform.position = Vector3.MoveTowards(myTransform.position, top, 10*Time.deltaTime);
 			//Move ();
 		//	myTransform.position = Vector3.MoveTowards(myTransform.position, top, 10*Time.deltaTime);
 			MoveCirclely ();
 		
+=======
+		if(isRotate)
+			Rotate ();
+
+		if(onBoard)
+			Move ();
+
+>>>>>>> origin/master
 	}
 
+	public void CheckRotate()
+	{
+		if (damSc.health <= thresholdHealth && !isRotate) {
+
+			isRotate = (Random.Range(0,10) <= 6) ? true : false;		//30% Chance to Rotate
+		}
+	}
+
+	void Rotate()
+	{
+		myTransform.Rotate (Vector3.forward * (-180 * Time.deltaTime), Space.World);
+	}
 
 	void Move()
 	{
