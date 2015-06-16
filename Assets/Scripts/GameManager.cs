@@ -215,6 +215,13 @@ public class GameManager : MonoBehaviour {
 
 			//Instantiate
 			GameObject obj = (GameObject) Instantiate(Enemies[0], spawnPoints[spawnIndex].position, Quaternion.identity);
+			EnemyAir script = obj.GetComponent<EnemyAir>();
+
+			if(script != null)
+			{
+				script.MoveType = Random.Range(0,2);
+			}
+
 			obj.SetActive(true);
 
 			++spawnedEnemies;
