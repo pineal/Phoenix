@@ -30,12 +30,15 @@ public class GunManager : MonoBehaviour {
 	void Start()
 	{
 
-		bulletCreates = myTransform.GetComponentsInChildren<BulletCreate>(true);		//bulletCreates[0] is the Assembly itself.
+		bulletCreates = myTransform.GetComponentsInChildren<BulletCreate>(true);		
 
 		noOfGuns = myTransform.childCount;
 
 
 	}
+
+	//!!! CoRoutines are being stopped in the Update Loop. 
+	//They should probably be stopped when Activating the new gun to not cause any issues through change in Position.
 
 	void Update()
 	{
@@ -53,6 +56,25 @@ public class GunManager : MonoBehaviour {
 			}
 
 			gunLevel = gunLevel & ~(128);
+		}
+
+	}
+
+	public void ActivatePlayerGun()
+	{
+		int tempGunLevel = gunLevel;
+
+		//Loop from BulletCreates[1-n] as the first gun (BulletCreate[0]) should always be active.
+		for (int i = 1; i<noOfGuns && (tempGunLevel & 1) == 1; ++i) 
+		{
+
+			if(i == 1 && !bulletCreates[1].gameObject.activeSelf) 		//Change Gun Position
+			{
+				myGameObject.transform.localPosition = myGameObject.transform.localPosition + (new Vector3(-1f,0f,0f));
+			}
+
+				bulletCreates[i].gameObject.SetActive(true);
+				tempGunLevel = tempGunLevel>>1;
 		}
 
 	}
