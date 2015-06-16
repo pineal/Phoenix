@@ -8,6 +8,16 @@ public class GameManager : MonoBehaviour {
 	public int level = 0;
 	public int stage = 0;
 
+	private float topOfActiveScreen = 0.0f;
+	private float rightOfActiveScreen = 0.0f;
+
+	public float TopOfActiveScreen{
+		get{ return topOfActiveScreen; }
+	}
+	public float RightOfActiveScreen{
+		get{ return rightOfActiveScreen; }
+	}
+
 	public List<GameObject> Enemies;
 
 	public int checkpointsPassed = 0;
@@ -51,6 +61,9 @@ public class GameManager : MonoBehaviour {
 
 			spawnPoints.Add(spawners[i].transform);
 		}
+
+		topOfActiveScreen = Camera.main.orthographicSize - 1.5f;
+		rightOfActiveScreen = Camera.main.orthographicSize * ((float)Screen.width / (float)Screen.height);
 
 		InitGame ();
 
@@ -206,7 +219,7 @@ public class GameManager : MonoBehaviour {
 
 			++spawnedEnemies;
 
-			yield return new WaitForSeconds(2f);
+			yield return new WaitForSeconds(1f);
 		}
 	}
 
