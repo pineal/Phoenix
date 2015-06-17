@@ -15,6 +15,8 @@ public class PlayerScript : MonoBehaviour {
 	public Text debugText;
 	public Text scoreText;
 
+	public GameObject UI;
+
 	private int score = 0;
 
 	public int Score{
@@ -46,7 +48,10 @@ public class PlayerScript : MonoBehaviour {
 
 			Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			if (topOfActiveScreen >= mousePos.y) {
-				//Time.timeScale = 0.1f;
+				Time.timeScale = 1f;
+
+				if (UI != null && UI.activeSelf)
+					UI.SetActive(false);
 
 				mousePos.y += 0.5f;
 
@@ -98,7 +103,11 @@ public class PlayerScript : MonoBehaviour {
 		} 
 		else 
 		{
-			Time.timeScale = 1.0f;
+			Time.timeScale = 0.1f;
+
+			if (UI != null && !UI.activeSelf)
+				UI.SetActive(true);
+
 		}
 
 		//!!! Might need to find a better place for this.
