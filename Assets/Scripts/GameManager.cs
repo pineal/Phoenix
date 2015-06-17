@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
 	public int level = 0;
 	public int stage = 0;
+
+	public GameObject canvas;
+	public Text popupText;
+	public GameObject pauseUI;
 
 	private float topOfActiveScreen = 0.0f;
 	private float rightOfActiveScreen = 0.0f;
@@ -38,6 +43,17 @@ public class GameManager : MonoBehaviour {
 	private int gameStatus = 0;		//0 - inactive, 1 - active, 2 - end of game
 
 	private List<Transform> spawnPoints = new List<Transform>();
+
+	private bool isPopupPublishing = false;
+
+
+	private enum Mode {NOT_IN_STAGE, IN_STAGE, LEVEL_WIN, LEVEL_LOSS};
+
+	private Mode playMode;
+
+	public int PlayMode {
+		get{ return (int)playMode;}
+	}
 
 	// Use this for initialization even if game has not been set up yet, or this script is not enabled.
 	void Awake() {
@@ -81,18 +97,31 @@ public class GameManager : MonoBehaviour {
 		//Activate Game
 		gameStatus = 1;
 
-		UpdateStage ();
+		//Reset Popup Text UI
+		popupText.gameObject.SetActive(false);
+
+		//Set Play Mode
+		playMode = Mode.NOT_IN_STAGE;
+
+		StartCoroutine("UpdateStage");
 	}
 
 	//Use this for Initialization of variables or states only when this script is enabled, and before the first Update is called.
 	void Start () {
 
 
-	
-	}
 
+	}
+//
+//	void Update()
+//	{
+//		if (playMode != Mode.IN_STAGE && pauseUI.activeSelf) {
+//					pauseUI.SetActive(false);	
+//		}
+//	}
+//
 	//Layout of Level
-	void UpdateStage ()		
+	IEnumerator UpdateStage ()		
 	{
 		switch (level) {
 		case 0:		// Level 0
@@ -100,7 +129,24 @@ public class GameManager : MonoBehaviour {
 			switch (stage) {
 			case 0:		// Stage 0
 			{
+				while(playMode == Mode.NOT_IN_STAGE)
+				{
+					while (isPopupPublishing)
+						yield return null;
+					StartCoroutine("PublishPopupReal", "Welcome!");
+
+					while (isPopupPublishing)
+						yield return null;
+					StartCoroutine("PublishPopupReal", "Hello!");
+
+					while (isPopupPublishing)
+						yield return null;
+					playMode = Mode.IN_STAGE;
+				}
+
 				if (needToSpawn == 0) {
+
+
 					++needToSpawn;
 					break;
 				} 
@@ -184,6 +230,8 @@ public class GameManager : MonoBehaviour {
 		}
 
 		SpawnEnemies ();
+
+		yield return null;
 	}
 
 	void ResetStageVars()
@@ -196,7 +244,8 @@ public class GameManager : MonoBehaviour {
 		++destroyedEnemies;
 
 		if ( (spawnedEnemies == destroyedEnemies) && (destroyedEnemies == needToSpawn) ) {
-			UpdateStage ();
+			StopCoroutine("UpdateStage");
+			StartCoroutine("UpdateStage");
 		}
 
 	}
@@ -208,14 +257,17 @@ public class GameManager : MonoBehaviour {
 
 		//GameObject obj = (GameObject) Instantiate(Enemies[0], spawnPoints[0].position, Quaternion.identity);
 
-		StopAllCoroutines ();
+		StopCoroutine ("EnemySpawner");
 
-		StartCoroutine (EnemySpawner());
+		StartCoroutine ("EnemySpawner");
 
 	}
 
 	IEnumerator EnemySpawner ()
 	{
+//		if (!popupText.gameObject.activeSelf)
+//			yield return null;
+
 		yield return new WaitForSeconds (3f);
 		for (int i=spawnedEnemies; i<needToSpawn; ++i) {
 			//Get Spawn Point
@@ -235,6 +287,60 @@ public class GameManager : MonoBehaviour {
 			++spawnedEnemies;
 
 			yield return new WaitForSeconds(1f);
+		}
+	}
+
+	public void PublishPopupUI(string text)
+	{
+		if (true) {
+
+			//popupText.gameObject.SetActive(true);
+
+			popupText.text = text;
+
+			StartCoroutine("PublishPopupReal");
+		}
+	}
+
+	IEnumerator PublishPopupReal( string text)
+	{
+		RectTransform rt = popupText.gameObject.GetComponent<RectTransform>();
+
+		popupText.text = text; 
+
+		while (true) {
+
+			if (popupText.gameObject.activeSelf) {
+
+				yield return null;
+				continue;
+			
+			} else {
+
+				isPopupPublishing = true;
+
+				popupText.gameObject.SetActive (true);
+				float scale = 0.01f;
+				Vector3 scaleVec = new Vector3 (scale, scale, 1f);
+				rt.localScale = scaleVec;
+
+				while (rt.localScale.x < 1) {
+					scale += Time.deltaTime * 3;
+					scaleVec.x = scale;
+					scaleVec.y = scale;
+
+					rt.localScale = scaleVec;
+
+					yield return null;
+				}
+
+				yield return new WaitForSeconds (2f);
+				popupText.gameObject.SetActive (false);
+				yield return new WaitForSeconds (0.5f);
+
+				isPopupPublishing = false;
+				break;
+			}
 		}
 	}
 

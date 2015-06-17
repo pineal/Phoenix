@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -15,6 +17,8 @@ public class PlayerScript : MonoBehaviour {
 	public Text debugText;
 	public Text scoreText;
 
+	public EventSystem eventSystem;
+
 	public GameObject UI;
 
 	private int score = 0;
@@ -24,6 +28,10 @@ public class PlayerScript : MonoBehaviour {
 		set{ score = value; }
 	}
 
+	private bool inMenu = false;
+	private List<RectTransform> pauseButtons = new List<RectTransform>();
+
+	private int playMode = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +39,21 @@ public class PlayerScript : MonoBehaviour {
 		score = GameManager.instance.PlayerScore;
 
 		topOfActiveScreen = GameManager.instance.TopOfActiveScreen;
+
+		if (UI != null) {
+			pauseButtons.AddRange (UI.GetComponentsInChildren<RectTransform>());
+
+			for (int i=0; i<pauseButtons.Count; ++i)
+			{
+				if ( (pauseButtons[i].tag.Length >= 4 && pauseButtons[i].tag.Substring(0, 4) != "UIPa" ) 
+				    || (pauseButtons[i].tag.Length < 4) )
+				{
+					pauseButtons.RemoveAt(i);
+					--i;
+				}
+
+			}
+		}
 
 	}
 	
@@ -41,17 +64,36 @@ public class PlayerScript : MonoBehaviour {
 
 	void Update () {
 
+		playMode = (int)GameManager.instance.PlayMode;
 
 
-		if (Input.GetButton ("Fire1")) {
+		if (Input.GetButton ("Fire1") && playMode == 1) {
 			//Debug.Log ("fire button");
 
+
+
 			Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-			if (topOfActiveScreen >= mousePos.y) {
+			Vector3 realMousePos = Input.mousePosition;
+			Vector3 anotherMousePos = Camera.main.ScreenToViewportPoint (Input.mousePosition);
+			Vector3 random = new Vector3(0f,0f,0f);
+			bool flag = false;
+			flag = RectTransformUtility.RectangleContainsScreenPoint(pauseButtons[0], Input.mousePosition, Camera.main);
+			Debug.Log(flag);
+
+			if(UI != null && UI.activeSelf && !CheckIfClickInRect(Input.mousePosition))
+			{
+				UI.SetActive (false);
+			}
+
+			if (topOfActiveScreen >= mousePos.y && !UI.activeSelf) {
 				Time.timeScale = 1f;
 
+				Vector2 pause = pauseButtons[0].anchorMax;
+				Vector2 pause2 = pauseButtons[0].anchorMin;
+
+
 				if (UI != null && UI.activeSelf)
-					UI.SetActive(false);
+
 
 				mousePos.y += 0.5f;
 
@@ -100,15 +142,24 @@ public class PlayerScript : MonoBehaviour {
 				//Check for Button
 			}
 
-		} 
-		else 
-		{
+		} else if (playMode == 1) {
 			Time.timeScale = 0.1f;
 
 			if (UI != null && !UI.activeSelf)
-				UI.SetActive(true);
+			{
+				UI.SetActive (true);
+				inMenu = true;
+			}
 
+		} else {
+			Time.timeScale = 1f;
+			if (UI != null && UI.activeSelf)
+			{
+				UI.SetActive(false);
+				inMenu = false;
+			}
 		}
+
 
 		//!!! Might need to find a better place for this.
 		Time.fixedDeltaTime = 0.02F * Time.timeScale;
@@ -154,6 +205,16 @@ public class PlayerScript : MonoBehaviour {
 
 	}
 
+	private bool CheckIfClickInRect(Vector3 mousePos)
+	{
+		Camera cam = Camera.main;
+
+		for (int i=0; i<pauseButtons.Count; i++) {
+			if(RectTransformUtility.RectangleContainsScreenPoint(pauseButtons[i], Input.mousePosition, Camera.main))
+				return true;
+		}
+		return false;
+	}
 
 	private void OnDisable()
 	{

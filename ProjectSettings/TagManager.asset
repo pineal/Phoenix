@@ -11,6 +11,8 @@ TagManager:
   - EnemyBullet1
   - EnemyAir
   - EnemySpawn
+  - PopupText
+  - UIPauseButton
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -49,23 +51,23 @@ TagManager:
     userID: 0
     uniqueID: 0
     locked: 0
-  - name: UI
-    userID: 1
-    uniqueID: 3911581593
-    locked: 0
-  - name: Random Upper
-    userID: 2
-    uniqueID: 3166097689
-    locked: 0
-  - name: Flight Level
-    userID: 3
-    uniqueID: 4062046063
+  - name: Ground
+    userID: 5
+    uniqueID: 2829342221
     locked: 0
   - name: Random Lower
     userID: 4
     uniqueID: 2599805805
     locked: 0
-  - name: Ground
-    userID: 5
-    uniqueID: 2829342221
+  - name: Flight Level
+    userID: 3
+    uniqueID: 4062046063
+    locked: 0
+  - name: Random Upper
+    userID: 2
+    uniqueID: 3166097689
+    locked: 0
+  - name: UI
+    userID: 1
+    uniqueID: 3911581593
     locked: 0

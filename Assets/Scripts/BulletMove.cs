@@ -31,6 +31,9 @@ public class BulletMove : MonoBehaviour {
 		get{ return prob; } 
 		set{ prob = value; }
 	}
+
+	private float topOfScreen = Camera.main.orthographicSize;
+
 	// Use this for initialization
 	void Start () {
 
@@ -64,6 +67,10 @@ public class BulletMove : MonoBehaviour {
 			left.Translate (speed * Time.deltaTime, speed * Time.deltaTime, 0);
 
 			//right.Translate (-speed * Time.deltaTime, speed * Time.deltaTime, 0);
+		}
+
+		if (myTransform.position.y >= topOfScreen) {
+			this.gameObject.GetComponent<BulletDestroy>().Destroy();
 		}
 
 	}
