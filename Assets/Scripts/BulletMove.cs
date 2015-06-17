@@ -31,10 +31,15 @@ public class BulletMove : MonoBehaviour {
 		get{ return prob; } 
 		set{ prob = value; }
 	}
+
+	private float topOfScreen=0.0f;
+
 	// Use this for initialization
 	void Start () {
 
 		myTransform = transform;
+
+		topOfScreen = Camera.main.orthographicSize;
 
 		if(bulletType < 0)		//In case no bullet Type was set.
 			bulletType = 1;	//strait line
@@ -64,6 +69,10 @@ public class BulletMove : MonoBehaviour {
 			left.Translate (speed * Time.deltaTime, speed * Time.deltaTime, 0);
 
 			//right.Translate (-speed * Time.deltaTime, speed * Time.deltaTime, 0);
+		}
+
+		if (myTransform.position.y >= topOfScreen) {
+			this.gameObject.GetComponent<BulletDestroy>().Destroy();
 		}
 
 	}

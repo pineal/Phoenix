@@ -8,7 +8,7 @@ public class BulletDestroy : MonoBehaviour {
 		Invoke ("Destroy", 2.5f);
 	}
 
-	void Destroy()
+	public void Destroy()
 	{
 		gameObject.SetActive (false);
 	}
