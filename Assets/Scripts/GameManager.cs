@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
 	private bool spawnBigBoss = false;
 
 	private GameObject player = null;
-	private GunManager playerGunMgr = null;
+	[HideInInspector]public GunManager playerGunMgr = null;
 
 	private int gameStatus = 0;		//0 - inactive, 1 - active, 2 - end of game
 

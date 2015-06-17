@@ -32,12 +32,14 @@ public class BulletMove : MonoBehaviour {
 		set{ prob = value; }
 	}
 
-	private float topOfScreen = Camera.main.orthographicSize;
+	private float topOfScreen=0.0f;
 
 	// Use this for initialization
 	void Start () {
 
 		myTransform = transform;
+
+		topOfScreen = Camera.main.orthographicSize;
 
 		if(bulletType < 0)		//In case no bullet Type was set.
 			bulletType = 1;	//strait line

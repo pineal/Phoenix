@@ -79,7 +79,7 @@ public class BulletCreate : MonoBehaviour {
 				{
 					moveObj.Damage = gunMgr.damage;
 					moveObj.Speed = gunMgr.speed;
-					moveObj.Type = gunMgr.type;
+					moveObj.Type = gunMgr.GunType;
 					moveObj.ProbabilityOfDamage = gunMgr.prob;
 				}
 
@@ -100,7 +100,7 @@ public class BulletCreate : MonoBehaviour {
 
 				Animator animator = obj.GetComponent<Animator>();
 
-				animator.SetInteger("bulletType", gunMgr.type);
+				animator.SetInteger("bulletType", gunMgr.GunType);
 
 				yield return new WaitForSeconds(fireTime);
 			}

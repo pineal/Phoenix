@@ -73,26 +73,14 @@ public class PlayerScript : MonoBehaviour {
 
 
 			Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-			Vector3 realMousePos = Input.mousePosition;
-			Vector3 anotherMousePos = Camera.main.ScreenToViewportPoint (Input.mousePosition);
-			Vector3 random = new Vector3(0f,0f,0f);
-			bool flag = false;
-			flag = RectTransformUtility.RectangleContainsScreenPoint(pauseButtons[0], Input.mousePosition, Camera.main);
-			Debug.Log(flag);
 
 			if(UI != null && UI.activeSelf && !CheckIfClickInRect(Input.mousePosition))
 			{
 				UI.SetActive (false);
+				Time.timeScale = 1f;
 			}
 
 			if (topOfActiveScreen >= mousePos.y && !UI.activeSelf) {
-				Time.timeScale = 1f;
-
-				Vector2 pause = pauseButtons[0].anchorMax;
-				Vector2 pause2 = pauseButtons[0].anchorMin;
-
-
-				if (UI != null && UI.activeSelf)
 
 
 				mousePos.y += 0.5f;
