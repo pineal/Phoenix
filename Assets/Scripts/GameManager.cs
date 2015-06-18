@@ -101,6 +101,8 @@ public class GameManager : MonoBehaviour {
 
 
 		// GunManager, set gunlevel
+		playerGunMgr.gunLevel = 128;
+		playerGunMgr.ActivatePlayerGun();
 
 
 		//Activate Game
