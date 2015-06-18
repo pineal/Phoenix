@@ -5,6 +5,10 @@ using System.Collections.Generic;
 public class BulletCreate : MonoBehaviour {
 
 	public float fireTime = 0.1f;
+	public float FireTime {
+		get{ return fireTime; }
+		set{ fireTime = value; }
+	}
 
 	public ObjectPoolerScript poolerScript;
 	public GameObject pooledObject;
@@ -19,7 +23,16 @@ public class BulletCreate : MonoBehaviour {
 	private string parentTag;
 
 	private int burstAmt = 0;
+	public int BurstAmt {
+		get{ return burstAmt; }
+		set{ burstAmt = value; }
+	}
+
 	private float burstInterval =0f;
+	public float BurstInterval {
+		get{ return burstInterval; }
+		set{ burstInterval = value; }
+	}
 
 
 
@@ -58,10 +71,14 @@ public class BulletCreate : MonoBehaviour {
 	//void ShootReal()
 	public IEnumerator Shoot(float initWait, float burstInt)
 	{
+
+
 		//GameObject obj = ObjectPoolerScript.current.getPooledObject ();
 		yield return new WaitForSeconds (initWait);
 
 		while (true) {
+
+
 
 			if (!this.enabled)
 			{
@@ -71,6 +88,12 @@ public class BulletCreate : MonoBehaviour {
 
 			for(int i=0; i<burstAmt || burstAmt==0; ++i)
 			{
+				if (GameManager.instance.PlayMode != (int)GameManager.Mode.IN_STAGE)
+				{
+					yield return null;
+					break;
+				}
+
 				GameObject obj = poolerScript.getPooledObject ();
 
 				BulletMove moveObj = obj.GetComponent<BulletMove> ();

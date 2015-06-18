@@ -12,7 +12,8 @@ public class GunManager : MonoBehaviour {
 	private Bullet type = Bullet.NORMAL;		//0 - Normal ; 1 - Corrosion ; 2 - Electricity ; 3 - Fire ; 4 - Freeze
 	public int GunType{
 		get{ return (int)type; }
-		set{ type = (Bullet)value; }
+		set{ type = (Bullet)value;
+			setGunProp(); }
 	}
 
 	public float prob= 0.0f;
@@ -42,6 +43,52 @@ public class GunManager : MonoBehaviour {
 		noOfGuns = myTransform.childCount;
 
 
+	}
+
+	void setGunProp()
+	{
+		switch (type) {
+		case Bullet.NORMAL:
+		{
+			fireInterval = 0.1f;
+			speed = 15f;
+			damage = 1;
+			prob = 0f;
+			burstAmt = 0;
+			burstInterval = 0.5f;
+
+			break;
+		}
+		case Bullet.CORROSIVE:
+		{
+			fireInterval = 0.5f;
+			speed = 7.5f;
+			damage = 3;
+			prob = 0f;
+			burstAmt = 0;
+			burstInterval = 0.5f;
+			
+			break;
+		}
+		default:
+		{
+			fireInterval = 0.1f;
+			speed = 15f;
+			damage = 1;
+			prob = 0f;
+			burstAmt = 0;
+			burstInterval = 0.5f;
+			
+			break;
+		}
+		}
+
+		//Set Properties for each gun
+		for (int i=0; i<noOfGuns; ++i) {
+			bulletCreates[i].fireTime = fireInterval;
+			bulletCreates[i].BurstAmt = burstAmt;
+			bulletCreates[i].BurstInterval = burstInterval;
+		}
 	}
 
 	//!!! CoRoutines are being stopped in the Update Loop. 
