@@ -1,17 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &153160
+--- !u!1 &159874
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 453160}
-  - 114: {fileID: 11453156}
-  - 114: {fileID: 11453154}
-  - 114: {fileID: 11453152}
-  m_Layer: 8
+  - 4: {fileID: 459874}
+  - 114: {fileID: 11459870}
+  m_Layer: 0
+  m_Name: GunAssembly
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &159876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 459876}
+  - 114: {fileID: 11459872}
+  - 114: {fileID: 11459874}
+  m_Layer: 0
+  m_Name: Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &159878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 459878}
+  - 114: {fileID: 11459876}
+  - 114: {fileID: 11459878}
+  m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,26 +58,54 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 467010}
-  - 114: {fileID: 11453160}
-  m_Layer: 0
-  m_Name: GunAssembly
+  - 114: {fileID: 11474486}
+  - 114: {fileID: 11474484}
+  m_Layer: 8
+  m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &453160
+--- !u!4 &459874
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153160}
+  m_GameObject: {fileID: 159874}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.531018138, y: -2.1474967, z: -.234375}
-  m_LocalScale: {x: .200000003, y: .200000003, z: .200000003}
-  m_Children: []
-  m_Father: {fileID: 467010}
+  m_LocalPosition: {x: .300000012, y: .400000006, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 467010}
+  - {fileID: 459876}
+  - {fileID: 459878}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &459876
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159876}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.0399999991, y: 3.3599999, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 459874}
+  m_RootOrder: 1
+--- !u!4 &459878
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159878}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.0399999991, y: 3.3599999, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 459874}
+  m_RootOrder: 2
 --- !u!4 &467010
 Transform:
   m_ObjectHideFlags: 1
@@ -53,67 +113,17 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .300000012, y: .400000006, z: 4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 453160}
-  m_Father: {fileID: 0}
+  m_LocalPosition: {x: -.531018138, y: -2.1474967, z: -.234375}
+  m_LocalScale: {x: .200000003, y: .200000003, z: .200000003}
+  m_Children: []
+  m_Father: {fileID: 459874}
   m_RootOrder: 0
---- !u!114 &11453152
+--- !u!114 &11459870
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcdecb0cc4b2047399cf190ef2671a2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireInterval: .100000001
-  speed: 15
-  damage: 1
-  type: 0
-  prob: 0
-  burstAmt: 0
-  burstInterval: .5
-  gunLevel: 128
-  noOfGuns: 0
---- !u!114 &11453154
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153160}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97757de0516c4432fb8c604a1c7a0a63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  willGrow: 0
---- !u!114 &11453156
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12243d44746a8446497fb3aca6258e18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireTime: .100000001
-  poolerScript: {fileID: 11453154}
-  pooledObject: {fileID: 158986, guid: dc820f07e12c142d08596c2bdb71911e, type: 2}
-  pooledAmount: 20
-  willGrow: 1
-  test: 0
---- !u!114 &11453160
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167010}
+  m_GameObject: {fileID: 159874}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fcdecb0cc4b2047399cf190ef2671a2d, type: 3}
@@ -122,12 +132,98 @@ MonoBehaviour:
   fireInterval: .100000001
   speed: 5
   damage: 1
-  type: 0
   prob: 0
   burstAmt: 3
   burstInterval: .5
   gunLevel: 128
   noOfGuns: 0
+--- !u!114 &11459872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12243d44746a8446497fb3aca6258e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireTime: .100000001
+  poolerScript: {fileID: 11459874}
+  pooledObject: {fileID: 158986, guid: dc820f07e12c142d08596c2bdb71911e, type: 2}
+  pooledAmount: 20
+  willGrow: 1
+  test: 0
+--- !u!114 &11459874
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159876}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97757de0516c4432fb8c604a1c7a0a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  willGrow: 0
+--- !u!114 &11459876
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12243d44746a8446497fb3aca6258e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireTime: .100000001
+  poolerScript: {fileID: 11459878}
+  pooledObject: {fileID: 158986, guid: dc820f07e12c142d08596c2bdb71911e, type: 2}
+  pooledAmount: 20
+  willGrow: 1
+  test: 0
+--- !u!114 &11459878
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159878}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97757de0516c4432fb8c604a1c7a0a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  willGrow: 0
+--- !u!114 &11474484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167010}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97757de0516c4432fb8c604a1c7a0a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  willGrow: 0
+--- !u!114 &11474486
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12243d44746a8446497fb3aca6258e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireTime: .100000001
+  poolerScript: {fileID: 11474484}
+  pooledObject: {fileID: 158986, guid: dc820f07e12c142d08596c2bdb71911e, type: 2}
+  pooledAmount: 20
+  willGrow: 1
+  test: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -137,6 +233,6 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 167010}
+  m_RootGameObject: {fileID: 159874}
   m_IsPrefabParent: 1
   m_IsExploded: 1

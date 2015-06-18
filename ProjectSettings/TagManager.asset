@@ -13,6 +13,7 @@ TagManager:
   - EnemySpawn
   - PopupText
   - UIPauseButton
+  - BigBoss
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   User Layer 9: Enemy Air Units
   User Layer 10: Enemy Ground Units
   User Layer 11: Allied Enemy Air Units
-  User Layer 12: 
+  User Layer 12: Pickups
   User Layer 13: 
   User Layer 14: 
   User Layer 15: 

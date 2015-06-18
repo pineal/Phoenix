@@ -24,21 +24,27 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public List<GameObject> Enemies;
+	public List<GameObject> BigBoss;
 
 	public int checkpointsPassed = 0;
 
 	private int playerScore = 0;
-
 	public int PlayerScore{
 		get{ return playerScore; }
 		set{ playerScore = value; }
 	}
+
+	private Vector3 playerSpawnPos = new Vector3 (0f, 0f, 0f);
 
 	private int spawnedEnemies = 0, destroyedEnemies = 0, needToSpawn = 0;
 	private bool spawnBigBoss = false;
 
 	private GameObject player = null;
 	[HideInInspector]public GunManager playerGunMgr = null;
+	private int playerInitHealth = 0;
+	public int PlayerInitHealth{
+		get{ return playerInitHealth; }
+	}
 
 	private int gameStatus = 0;		//0 - inactive, 1 - active, 2 - end of game
 
@@ -47,7 +53,7 @@ public class GameManager : MonoBehaviour {
 	private bool isPopupPublishing = false;
 
 
-	private enum Mode {NOT_IN_STAGE, IN_STAGE, LEVEL_WIN, LEVEL_LOSS};
+	public enum Mode {NOT_IN_STAGE, IN_STAGE, LEVEL_WIN, LEVEL_LOSS, RESPAWNING};
 
 	private Mode playMode;
 
@@ -68,6 +74,9 @@ public class GameManager : MonoBehaviour {
 		//Get Player
 		player = GameObject.Find("Player");
 		playerGunMgr = player.GetComponentInChildren<GunManager> ();
+		playerSpawnPos = player.transform.position;
+		playerInitHealth = player.GetComponent<DamageScript> ().health;
+
 
 		GameObject[] spawners = GameObject.FindGameObjectsWithTag ("EnemySpawn");
 
@@ -133,11 +142,30 @@ public class GameManager : MonoBehaviour {
 				{
 					while (isPopupPublishing)
 						yield return null;
-					StartCoroutine("PublishPopupReal", "Welcome!");
+
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Welcome to Pandora, Soldier!");
+
 
 					while (isPopupPublishing)
 						yield return null;
-					StartCoroutine("PublishPopupReal", "Hello!");
+
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "You've got incoming hostiles!");
+
+
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Get off your Auto pilot!");
+
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Here we go ...");
+
 
 					while (isPopupPublishing)
 						yield return null;
@@ -158,12 +186,49 @@ public class GameManager : MonoBehaviour {
 				{
 					ResetStageVars();
 					++stage;
+					playMode = Mode.NOT_IN_STAGE;
 				}
 			}
 			goto case 1;
 
 			case 1:		// Stage 1
 			{
+				//Pre-Stage Messages
+				while(playMode == Mode.NOT_IN_STAGE)
+				{
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Good Job!");
+
+
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Take a breather!");
+
+					yield return new WaitForSeconds(3f);
+
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Second Wave Incoming!");
+
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "All Hands on Deck!");
+					
+					
+					while (isPopupPublishing)
+						yield return null;
+					playMode = Mode.IN_STAGE;
+				}
+
 				if ( (playerGunMgr.gunLevel & 1) == 0 )		//LSB == Gun[2];
 				{
 					playerGunMgr.gunLevel = playerGunMgr.gunLevel | 129;
@@ -178,12 +243,49 @@ public class GameManager : MonoBehaviour {
 				{
 					ResetStageVars();
 					++stage;
+					playMode = Mode.NOT_IN_STAGE;
 				}
 			}
 			goto case 2;
 			
 			case 2:		// Stage 2
 			{
+				//Pre-Stage Messages
+				while(playMode == Mode.NOT_IN_STAGE)
+				{
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "You've got some moves, hunter!");
+					
+					
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "We could use someone like you");
+					
+					yield return new WaitForSeconds(3f);
+					
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Next Wave Incoming!");
+					
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Hands on Deck!");
+					
+					
+					while (isPopupPublishing)
+						yield return null;
+					playMode = Mode.IN_STAGE;
+				}
+
 				if (needToSpawn == 0 || needToSpawn == 7) {
 					needToSpawn += 3;
 					break;
@@ -196,21 +298,61 @@ public class GameManager : MonoBehaviour {
 				{
 					ResetStageVars();
 					++stage;
+					playMode = Mode.NOT_IN_STAGE;
 				}
 			}
 			goto case 3;
 
 			case 3:		// Stage 3
 			{
-				if (needToSpawn == 0) {
-					needToSpawn += 2;
-					spawnBigBoss = true;
+				//Pre-Stage Messages
+				while(playMode == Mode.NOT_IN_STAGE)
+				{
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Whoa ...");
+					
+					
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "You've got a big one heading your way");
+					
+					yield return new WaitForSeconds(3f);
+					
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Incoming!");
+					
+					while (isPopupPublishing)
+						yield return null;
+					
+					isPopupPublishing = true;
+					StartCoroutine("PublishPopupReal", "Hands on Deck!");
+					
+					
+					while (isPopupPublishing)
+						yield return null;
+					playMode = Mode.IN_STAGE;
+				}
+
+				if (needToSpawn == 0 || needToSpawn == 2) {
+					needToSpawn = 2;
+					if (!spawnBigBoss)
+						spawnBigBoss = true;
+
 					break;
 				}
 				else
 				{
 					ResetStageVars();
-					++stage;
+					//++stage;
+					//playMode = Mode.NOT_IN_STAGE;
 				}
 			}
 				break;
@@ -218,13 +360,20 @@ public class GameManager : MonoBehaviour {
 
 		}
 		
+		//!!! Probably do not need this anymore
 		if(stage < 4)
 			break;
+		else
+		{
+			playMode = Mode.LEVEL_WIN;
+		}
+
 
 		goto default;
 
 		default:
 			//End of Game
+
 			GameOver();
 			break;
 		}
@@ -239,8 +388,19 @@ public class GameManager : MonoBehaviour {
 		needToSpawn = spawnedEnemies = destroyedEnemies = 0;
 	}
 
-	public void EnemyDestroyed()
+	public void EnemyDestroyed(string tag)
 	{
+		if (tag == "BigBoss") {
+			++stage;
+
+			playMode = Mode.LEVEL_WIN;
+
+			StopCoroutine("UpdateStage");
+			StartCoroutine("UpdateStage");
+
+			return;
+		}
+
 		++destroyedEnemies;
 
 		if ( (spawnedEnemies == destroyedEnemies) && (destroyedEnemies == needToSpawn) ) {
@@ -269,6 +429,21 @@ public class GameManager : MonoBehaviour {
 //			yield return null;
 
 		yield return new WaitForSeconds (3f);
+
+		if (spawnBigBoss) {
+			GameObject obj = (GameObject)Instantiate (BigBoss[0], spawnPoints[0].position, Quaternion.identity);
+			BossMove script = obj.GetComponent<BossMove>();
+
+			if (script != null)
+			{
+				script.MoveType = 0;
+			}
+
+			obj.SetActive(true);
+
+			spawnBigBoss = false;
+		}
+
 		for (int i=spawnedEnemies; i<needToSpawn; ++i) {
 			//Get Spawn Point
 			int spawnIndex = Random.Range(0, spawnPoints.Count);
@@ -290,19 +465,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public void PublishPopupUI(string text)
-	{
-		if (true) {
-
-			//popupText.gameObject.SetActive(true);
-
-			popupText.text = text;
-
-			StartCoroutine("PublishPopupReal");
-		}
-	}
-
-	IEnumerator PublishPopupReal( string text)
+	IEnumerator PublishPopupReal(string text)
 	{
 		RectTransform rt = popupText.gameObject.GetComponent<RectTransform>();
 
@@ -310,44 +473,99 @@ public class GameManager : MonoBehaviour {
 
 		while (true) {
 
-			if (popupText.gameObject.activeSelf) {
+			popupText.gameObject.SetActive (true);
+			float scale = 0.01f;
+			Vector3 scaleVec = new Vector3 (scale, scale, 1f);
+			rt.localScale = scaleVec;
 
-				yield return null;
-				continue;
-			
-			} else {
+			while (rt.localScale.x < 1) {
+				scale += Time.deltaTime * 3;
+				scaleVec.x = scale;
+				scaleVec.y = scale;
 
-				isPopupPublishing = true;
-
-				popupText.gameObject.SetActive (true);
-				float scale = 0.01f;
-				Vector3 scaleVec = new Vector3 (scale, scale, 1f);
 				rt.localScale = scaleVec;
 
-				while (rt.localScale.x < 1) {
-					scale += Time.deltaTime * 3;
-					scaleVec.x = scale;
-					scaleVec.y = scale;
-
-					rt.localScale = scaleVec;
-
-					yield return null;
-				}
-
-				yield return new WaitForSeconds (2f);
-				popupText.gameObject.SetActive (false);
-				yield return new WaitForSeconds (0.5f);
-
-				isPopupPublishing = false;
-				break;
+				yield return null;
 			}
+
+			yield return new WaitForSeconds (2f);
+			popupText.gameObject.SetActive (false);
+			yield return new WaitForSeconds (0.5f);
+
+			isPopupPublishing = false;
+			break;
+
 		}
 	}
 
 	public void GameOver()
 	{
-		enabled = false;
+
+
+		if (playMode == Mode.IN_STAGE) {
+			player.renderer.enabled = false;
+			playMode = Mode.RESPAWNING;
+
+			StartCoroutine ("Respawn", 3f);
+			StartCoroutine ("Blink");
+		} else if (playMode == Mode.LEVEL_WIN) {
+			StartCoroutine ("Victory");
+		}
 	}
+
+	IEnumerator Victory()
+	{
+		while (isPopupPublishing)
+			yield return null;
+		isPopupPublishing = true;
+		StartCoroutine("PublishPopupReal", "Yayy!!\n\nYou Win!");
+
+		while (isPopupPublishing)
+			yield return null;
+		Application.LoadLevel (0);
+	}
+
+	IEnumerator Respawn(float delay)
+	{
+		player.transform.position = playerSpawnPos;
+		//player.renderer.enabled = false;
+		player.GetComponent<DamageScript> ().health = playerInitHealth * (stage + 1);
+
+		while (isPopupPublishing)
+			yield return null;
+		isPopupPublishing = true;
+		StartCoroutine("PublishPopupReal", "You Died!");
+
+		while (isPopupPublishing)
+			yield return null;
+
+		isPopupPublishing = true;
+		StartCoroutine("PublishPopupReal", "Respawning ...");
+
+		while (isPopupPublishing)
+			yield return null;
+		playMode = Mode.IN_STAGE;
+//		yield return new WaitForSeconds (delay);
+//
+//		StopCoroutine ("PublishPopupReal");
+
+
+	}
+
+	IEnumerator Blink()
+	{
+		while (playMode == Mode.RESPAWNING) {
+			player.renderer.enabled = false;
+			yield return new WaitForSeconds (0.5f);
+			player.renderer.enabled = true;
+			yield return new WaitForSeconds (0.5f);
+		}
+
+
+
+	}
+
+
 
 	public void UpdateScore(int score)
 	{

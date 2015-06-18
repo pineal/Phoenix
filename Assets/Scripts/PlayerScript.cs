@@ -17,8 +17,6 @@ public class PlayerScript : MonoBehaviour {
 	public Text debugText;
 	public Text scoreText;
 
-	public EventSystem eventSystem;
-
 	public GameObject UI;
 
 	private int score = 0;
@@ -56,8 +54,7 @@ public class PlayerScript : MonoBehaviour {
 		}
 
 	}
-	
-	// Update is called once per frame
+
 	void FixedUpdate () {
 	
 	}
@@ -198,7 +195,7 @@ public class PlayerScript : MonoBehaviour {
 		Camera cam = Camera.main;
 
 		for (int i=0; i<pauseButtons.Count; i++) {
-			if(RectTransformUtility.RectangleContainsScreenPoint(pauseButtons[i], Input.mousePosition, Camera.main))
+			if(RectTransformUtility.RectangleContainsScreenPoint(pauseButtons[i], Input.mousePosition, cam))
 				return true;
 		}
 		return false;
