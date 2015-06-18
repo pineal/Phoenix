@@ -26,6 +26,7 @@ public class GunManager : MonoBehaviour {
 
 	private Transform myTransform; 
 	private GameObject myGameObject;
+	private bool isPlayer = false;
 
 	BulletCreate[] bulletCreates;
 
@@ -42,6 +43,12 @@ public class GunManager : MonoBehaviour {
 
 		noOfGuns = myTransform.childCount;
 
+		if (transform.parent.gameObject.tag == "Player")
+			isPlayer = true;
+
+		if (isPlayer)
+			setGunProp ();
+
 
 	}
 
@@ -50,8 +57,8 @@ public class GunManager : MonoBehaviour {
 		switch (type) {
 		case Bullet.NORMAL:
 		{
-			fireInterval = 0.1f;
-			speed = 15f;
+			fireInterval = 0.25f;
+			speed = 10f;
 			damage = 1;
 			prob = 0f;
 			burstAmt = 0;
@@ -63,7 +70,7 @@ public class GunManager : MonoBehaviour {
 		{
 			fireInterval = 0.5f;
 			speed = 7.5f;
-			damage = 3;
+			damage = 5;
 			prob = 0f;
 			burstAmt = 0;
 			burstInterval = 0.5f;
