@@ -21,6 +21,8 @@ public class DamageScript : MonoBehaviour {
 	private bool isPlayer = false;
 	private bool isBoss = false;
 
+	private Transform myTransform;
+
 	void Awake()
 	{
 		if (transform.tag.Substring (0, 3) == "Ene") {		//!!! Modify for various Enemies
@@ -43,6 +45,8 @@ public class DamageScript : MonoBehaviour {
 			if (player != null)
 				playerScript = player.GetComponent<PlayerScript>();
 		}
+
+		myTransform = transform;
 	}
 
 
@@ -63,7 +67,7 @@ public class DamageScript : MonoBehaviour {
 					playerScript.Score += damage;
 				}
 			} else {
-				health -= 1;
+				health -= 3;
 				if (playerScript != null) {
 					playerScript.Score += 1;
 				}
@@ -80,7 +84,7 @@ public class DamageScript : MonoBehaviour {
 //					playerScript.Score -= damage;
 //				}
 			} else if (collider.tag.Substring (0, 4) != "Pick") {
-				health -= 1;
+				health -= 7;
 //				if (playerScript != null) {
 //					playerScript.Score -= 5;
 //				}
@@ -119,8 +123,8 @@ public class DamageScript : MonoBehaviour {
 			playerScript.Score += deathPoints;
 		}
 		if (!isPlayer) {
+			GameManager.instance.EnemyDestroyed(gameObject.tag, myTransform.position);
 			Destroy (gameObject);
-			GameManager.instance.EnemyDestroyed(gameObject.tag);
 		}	
 		else
 			GameManager.instance.GameOver ();

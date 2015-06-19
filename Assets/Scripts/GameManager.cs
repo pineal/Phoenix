@@ -40,20 +40,21 @@ public class GameManager : MonoBehaviour {
 	private bool spawnBigBoss = false;
 
 	private GameObject player = null;
+	public GameObject Player{
+		get{ return player; }
+	}
 	[HideInInspector]public GunManager playerGunMgr = null;
 	private int playerInitHealth = 0;
 	public int PlayerInitHealth{
 		get{ return playerInitHealth; }
 	}
 
-	private int gameStatus = 0;		//0 - inactive, 1 - active, 2 - end of game
-
 	private List<Transform> spawnPoints = new List<Transform>();
 
 	private bool isPopupPublishing = false;
 
 
-	public enum Mode {NOT_IN_STAGE, IN_STAGE, LEVEL_WIN, LEVEL_LOSS, RESPAWNING};
+	public enum Mode {NOT_IN_STAGE, IN_STAGE, LEVEL_WIN, LEVEL_LOSS, RESPAWNING, LEVEL_START};
 
 	private Mode playMode;
 
@@ -66,8 +67,10 @@ public class GameManager : MonoBehaviour {
 
 		if (instance == null)
 			instance = this;
-		else if (instance != this)
+		else if (instance != this) {
 			Destroy (gameObject);
+			return;
+		}
 
 		DontDestroyOnLoad (gameObject);
 
@@ -98,23 +101,28 @@ public class GameManager : MonoBehaviour {
 
 	void InitGame()
 	{
+		StopAllCoroutines();
+		playMode = Mode.NOT_IN_STAGE;
+		stage = 0;
 
+		spawnedEnemies = 0;
+		destroyedEnemies = 0;
+		needToSpawn = 0;
+		spawnBigBoss = false;
 
 		// GunManager, set gunlevel
 		playerGunMgr.gunLevel = 128;
 		playerGunMgr.ActivatePlayerGun();
 
 
-		//Activate Game
-		gameStatus = 1;
-
 		//Reset Popup Text UI
+		isPopupPublishing = false;
 		popupText.gameObject.SetActive(false);
 
 		//Set Play Mode
-		playMode = Mode.NOT_IN_STAGE;
+		playMode = Mode.LEVEL_START;
 
-		StartCoroutine("UpdateStage");
+
 	}
 
 	//Use this for Initialization of variables or states only when this script is enabled, and before the first Update is called.
@@ -123,14 +131,18 @@ public class GameManager : MonoBehaviour {
 
 
 	}
-//
-//	void Update()
-//	{
-//		if (playMode != Mode.IN_STAGE && pauseUI.activeSelf) {
-//					pauseUI.SetActive(false);	
-//		}
-//	}
-//
+
+	void Update()
+	{
+		if (Application.loadedLevel == 0) {
+			StopAllCoroutines ();	
+		} else if (playMode == Mode.LEVEL_START){
+			playMode = Mode.NOT_IN_STAGE;
+			StartCoroutine("UpdateStage");
+		}
+
+	}
+
 	//Layout of Level
 	IEnumerator UpdateStage ()		
 	{
@@ -390,7 +402,7 @@ public class GameManager : MonoBehaviour {
 		needToSpawn = spawnedEnemies = destroyedEnemies = 0;
 	}
 
-	public void EnemyDestroyed(string tag)
+	public void EnemyDestroyed(string tag, Vector3 pos)
 	{
 		if (tag == "BigBoss") {
 			++stage;
@@ -402,6 +414,8 @@ public class GameManager : MonoBehaviour {
 
 			return;
 		}
+
+		PickupManager.instance.spawnPickup (pos);
 
 		++destroyedEnemies;
 
@@ -502,8 +516,6 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver()
 	{
-
-
 		if (playMode == Mode.IN_STAGE) {
 			player.renderer.enabled = false;
 			playMode = Mode.RESPAWNING;
@@ -524,6 +536,8 @@ public class GameManager : MonoBehaviour {
 
 		while (isPopupPublishing)
 			yield return null;
+		Destroy (GameManager.instance.gameObject);
+		Destroy (PickupManager.instance.gameObject);
 		Application.LoadLevel (0);
 	}
 

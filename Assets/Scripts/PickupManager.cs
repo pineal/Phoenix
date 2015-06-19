@@ -63,8 +63,12 @@ public class PickupManager : MonoBehaviour {
 
 	void Update()
 	{
-		if (player == null)
+		if (Application.loadedLevel == 0)
 			return;
+		else if (player == null && GameManager.instance != null) {
+			player = GameManager.instance.Player;
+			return;
+		}
 
 		int newHealth = playerDamageScript.health;
 

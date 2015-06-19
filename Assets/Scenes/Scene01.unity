@@ -1151,7 +1151,7 @@ Transform:
   m_PrefabInternal: {fileID: 1002632383}
   m_GameObject: {fileID: 898518063}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 4}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1458279505}
@@ -1563,7 +1563,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 482192, guid: 4c1be249c38a749ca89b92c356352e8c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 482192, guid: 4c1be249c38a749ca89b92c356352e8c, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1583,7 +1583,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 482192, guid: 4c1be249c38a749ca89b92c356352e8c, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 21282192, guid: 4c1be249c38a749ca89b92c356352e8c, type: 2}
       propertyPath: m_Sprite
@@ -2323,7 +2323,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 482192, guid: 4c1be249c38a749ca89b92c356352e8c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 482192, guid: 4c1be249c38a749ca89b92c356352e8c, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2667,7 +2667,7 @@ Transform:
   m_Children:
   - {fileID: 88160795}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
 --- !u!114 &1436552803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2838,7 +2838,7 @@ Transform:
   m_PrefabInternal: {fileID: 1238827153}
   m_GameObject: {fileID: 1458279502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -20, z: 4}
+  m_LocalPosition: {x: 0, y: -20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 898518064}
@@ -3050,7 +3050,7 @@ RectTransform:
   - {fileID: 2058618956}
   - {fileID: 88341098}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -3666,7 +3666,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!1 &2058259979
 GameObject:
   m_ObjectHideFlags: 0
