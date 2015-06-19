@@ -197,9 +197,4 @@ public class EnemyAir : MonoBehaviour {
 
 		
 	}
-
-	void OnDestroy()
-	{
-		PickupManager.instance.spawnPickup (myTransform.position);
-	}
 }
