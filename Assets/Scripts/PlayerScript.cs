@@ -149,7 +149,7 @@ public class PlayerScript : MonoBehaviour {
 		//!!! Might need to find a better place for this.
 		Time.fixedDeltaTime = 0.02F * Time.timeScale;
 
-		setDebugText ();
+		//setDebugText ();
 	}
 
 	private Vector3 oldVel, curVel;

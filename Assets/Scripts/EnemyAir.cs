@@ -61,8 +61,8 @@ public class EnemyAir : MonoBehaviour {
 		thresholdHealth = (int)(0.6f * damSc.health);
 
 		//For Move
-		left = new Vector3(-rightOfScreen+0.75f, topOfScreen-1.5f, 4f );
-		right = new Vector3(rightOfScreen-0.75f, topOfScreen-1.5f, 4f );
+		left = new Vector3(-rightOfScreen+0.75f, topOfScreen-1.5f, 4f);
+		right = new Vector3(rightOfScreen-0.75f, topOfScreen-1.5f, 4f);
 		top = new Vector3 (0 ,topOfScreen, 4f);
 		if (myTransform.position.y > topOfScreen)
 			onBoard = false;

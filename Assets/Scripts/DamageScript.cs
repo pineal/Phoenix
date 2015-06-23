@@ -1,17 +1,27 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DamageScript : MonoBehaviour {
 
 	private GameObject player = null;
-	private PlayerScript playerScript = null;
-	private EnemyAir enemyAirScript = null;
-	private BossMove bossMoveScript = null;
+	private PlayerScript playerScript = null;		
+	private EnemyAir enemyAirScript = null;			
+	private BossMove bossMoveScript = null;			
 
-	public int health = 10;
+
 
 	private float timeToBlink = 0f;
 	private int deathPoints = 0;
+
+	public float health = 10.0f;
+	public float MAXHEALTH = 10.0f;
+	public float shield = 10.0f;
+	public float MAXSHILED = 10.0f;
+	private float rate = 0.5f;
+
+	public Text tempShield;
 
 	public int DeathPoints{
 		get{ return deathPoints; }
@@ -52,7 +62,7 @@ public class DamageScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		Debug.Log ("Trigger Collider: "+collider.name);
+		//Debug.Log ("Trigger Collider: "+collider.name);
 
 		if (GameManager.instance.PlayMode != (int)GameManager.Mode.IN_STAGE)
 			return;
@@ -62,7 +72,6 @@ public class DamageScript : MonoBehaviour {
 			if (collider.name.Substring (0, 4) == "Bull") {
 				int damage = collider.GetComponent<BulletMove> ().Damage;
 				health -= damage;
-
 				if (playerScript != null) {
 					playerScript.Score += damage;
 				}
@@ -75,10 +84,23 @@ public class DamageScript : MonoBehaviour {
 			if(enemyAirScript != null)
 				enemyAirScript.CheckRotate();
 			break;
+
 		case true:
 			if (collider.name.Substring (0, 4) == "Bull") {
 				int damage = collider.GetComponent<BulletMove> ().Damage;
-				health -= damage;
+				if (shield - damage > 0){
+					shield -= damage;
+					print ("shield" + shield);
+					print ("health" + health);
+				}
+				else {
+					shield = 0;
+					health -= (damage - shield);
+					print ("shield" + shield);
+					print ("health" + health);
+
+				}
+				//health -= damage;
 				
 //				if (playerScript != null) {
 //					playerScript.Score -= damage;
@@ -91,26 +113,22 @@ public class DamageScript : MonoBehaviour {
 			}
 			break;
 		}
-
-
-
+			
 		timeToBlink = 2f;
-
 		StopAllCoroutines();
 		renderer.enabled = true;
-		StartCoroutine ( Blink(timeToBlink) );
+		//StartCoroutine ( Blink(timeToBlink) );
+		StartCoroutine ( Recharge(timeToBlink) );
 
 	}
 
 	void Update() {
-
 		if (health <= 0) {
 			Die();
 		}
 	}
 
 	IEnumerator Blink(float time) {
-
 		renderer.enabled = false;
 		yield return new WaitForSeconds (0.05f);
 		renderer.enabled = true;
@@ -128,5 +146,12 @@ public class DamageScript : MonoBehaviour {
 		}	
 		else
 			GameManager.instance.GameOver ();
+	}
+
+	IEnumerator Recharge(float delay){
+		yield return new WaitForSeconds (delay);
+		while ((shield += rate * Time.deltaTime) < MAXSHILED) {
+			yield return null;
+		}
 	}
 }

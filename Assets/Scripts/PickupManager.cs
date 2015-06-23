@@ -51,16 +51,16 @@ public class PickupManager : MonoBehaviour {
 	}
 
 	//!!! Delete/Manage this variable later
-	private int oldHealth = 0;
+	private float oldHealth = 0;
 	//Use this for Initialization of variables or states only when this script is enabled, and before the first Update is called.
+
 	void Start () {
 
 		tempHealth.text = playerDamageScript.health.ToString();
 		oldHealth = playerDamageScript.health;
 		
 	}
-
-
+	
 	void Update()
 	{
 		if (Application.loadedLevel == 0)
@@ -70,7 +70,7 @@ public class PickupManager : MonoBehaviour {
 			return;
 		}
 
-		int newHealth = playerDamageScript.health;
+		float newHealth = playerDamageScript.health;
 
 		if (newHealth != oldHealth) {
 			tempHealth.text = playerDamageScript.health.ToString();
@@ -80,16 +80,20 @@ public class PickupManager : MonoBehaviour {
 
 	public bool UpdateHealth(int health)
 	{
-		playerDamageScript.health += health;
-		tempHealth.text = playerDamageScript.health.ToString();
+		if (playerDamageScript.health + health >= playerDamageScript.MAXHEALTH) {
+			playerDamageScript.health = playerDamageScript.MAXHEALTH;
+		} 
+		else {
+			playerDamageScript.health += health;
+		}
 
+		tempHealth.text = playerDamageScript.health.ToString();
 		return true;
 	}
 
 	public void spawnPickup(Vector3 pos)
 	{
 		int index = Random.Range (-1, 2/*Pickup.Count*/);
-
 		if (index >= 0)
 			Instantiate (Pickup [index % Pickup.Count], pos, Quaternion.identity);
 	}

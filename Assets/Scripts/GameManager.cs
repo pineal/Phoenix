@@ -44,8 +44,9 @@ public class GameManager : MonoBehaviour {
 		get{ return player; }
 	}
 	[HideInInspector]public GunManager playerGunMgr = null;
-	private int playerInitHealth = 0;
-	public int PlayerInitHealth{
+	private float playerInitHealth = 0.0f;
+
+	public float PlayerInitHealth{
 		get{ return playerInitHealth; }
 	}
 
@@ -114,7 +115,6 @@ public class GameManager : MonoBehaviour {
 		playerGunMgr.gunLevel = 128;
 		playerGunMgr.ActivatePlayerGun();
 
-
 		//Reset Popup Text UI
 		isPopupPublishing = false;
 		popupText.gameObject.SetActive(false);
@@ -141,6 +141,7 @@ public class GameManager : MonoBehaviour {
 			StartCoroutine("UpdateStage");
 		}
 
+		KaBoom ();
 	}
 
 	//Layout of Level
@@ -154,32 +155,32 @@ public class GameManager : MonoBehaviour {
 			{
 				while(playMode == Mode.NOT_IN_STAGE)
 				{
-					while (isPopupPublishing)
-						yield return null;
-
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Welcome to Pandora, Soldier!");
-
-
-					while (isPopupPublishing)
-						yield return null;
-
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "You've got incoming hostiles!");
-
-
-					while (isPopupPublishing)
-						yield return null;
-					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Get off your Auto pilot!");
-
-					while (isPopupPublishing)
-						yield return null;
-					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Here we go ...");
-
+//					while (isPopupPublishing)
+//						yield return null;
+//
+//					isPopupPublishing = true;
+//					StartCoroutine("PublishPopupReal", "Welcome to Pandora, Soldier!");
+//
+//
+//					while (isPopupPublishing)
+//						yield return null;
+//
+//					isPopupPublishing = true;
+//					StartCoroutine("PublishPopupReal", "You've got incoming hostiles!");
+//
+//
+//					while (isPopupPublishing)
+//						yield return null;
+//					
+//					isPopupPublishing = true;
+//					StartCoroutine("PublishPopupReal", "Get off your Auto pilot!");
+//
+//					while (isPopupPublishing)
+//						yield return null;
+//					
+//					isPopupPublishing = true;
+//					StartCoroutine("PublishPopupReal", "Here we go ...");
+//
 
 					while (isPopupPublishing)
 						yield return null;
@@ -580,11 +581,25 @@ public class GameManager : MonoBehaviour {
 
 
 	}
-
-
-
+	
 	public void UpdateScore(int score)
 	{
 		playerScore += score;
+	}
+
+	void KaBoom(){
+		if (Input.GetKeyDown(KeyCode.Return)){
+			//	player = GameObject.Find("Enemy");
+			GameObject[] Enemies = GameObject.FindGameObjectsWithTag("EnemyAir");
+			foreach (GameObject enemy in Enemies){
+				enemy.GetComponent<DamageScript> ().health -= 100;
+			}
+			GameObject Boss;
+			if (Boss = GameObject.FindGameObjectWithTag("BigBoss")){
+				Boss.GetComponent<DamageScript> ().health -= 100;
+			}
+
+
+		}
 	}
 }
