@@ -5,6 +5,7 @@ public class OnPickup : MonoBehaviour {
 
 
 	public int healthBonus=10;
+	public int damage = 5;
 
 	private GameObject player;
 	private Transform myTransform;
@@ -43,7 +44,25 @@ public class OnPickup : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collider)
 	{
 		if (collider.tag.Substring (0, 2) == "Pl" && collider.tag.Length == 6) {
-			PickupManager.instance.UpdateHealth(healthBonus);
+
+			int pickup = 0;
+
+			if (! int.TryParse(this.tag.Substring(6), out pickup))
+			    return;
+
+			switch (pickup)
+			{
+			case 0:
+			{
+				PickupManager.instance.UpdateHealth(healthBonus);
+			}
+				break;
+			case 1:
+			{
+				PickupManager.instance.KaBoom(damage);
+			}
+				break;
+			}
 			Destroy (gameObject);
 		}
 	}

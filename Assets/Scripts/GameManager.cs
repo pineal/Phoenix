@@ -44,8 +44,9 @@ public class GameManager : MonoBehaviour {
 		get{ return player; }
 	}
 	[HideInInspector]public GunManager playerGunMgr = null;
-	private int playerInitHealth = 0;
-	public int PlayerInitHealth{
+	private float playerInitHealth = 0.0f;
+
+	public float PlayerInitHealth{
 		get{ return playerInitHealth; }
 	}
 
@@ -114,7 +115,6 @@ public class GameManager : MonoBehaviour {
 		playerGunMgr.gunLevel = 128;
 		playerGunMgr.ActivatePlayerGun();
 
-
 		//Reset Popup Text UI
 		isPopupPublishing = false;
 		popupText.gameObject.SetActive(false);
@@ -140,7 +140,6 @@ public class GameManager : MonoBehaviour {
 			playMode = Mode.NOT_IN_STAGE;
 			StartCoroutine("UpdateStage");
 		}
-
 	}
 
 	//Layout of Level
@@ -179,7 +178,6 @@ public class GameManager : MonoBehaviour {
 //					
 //					isPopupPublishing = true;
 //					StartCoroutine("PublishPopupReal", "Here we go ...");
-
 
 					while (isPopupPublishing)
 						yield return null;
@@ -580,11 +578,10 @@ public class GameManager : MonoBehaviour {
 
 
 	}
-
-
-
+	
 	public void UpdateScore(int score)
 	{
 		playerScore += score;
 	}
+
 }

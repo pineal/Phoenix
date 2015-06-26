@@ -53,14 +53,14 @@ public class PickupManager : MonoBehaviour {
 	//!!! Delete/Manage this variable later
 	private float oldHealth = 0;
 	//Use this for Initialization of variables or states only when this script is enabled, and before the first Update is called.
+
 	void Start () {
 
 		tempHealth.text = playerDamageScript.Health.ToString();
 		oldHealth = playerDamageScript.Health;
 		
 	}
-
-
+	
 	void Update()
 	{
 		if (Application.loadedLevel == 0)
@@ -80,8 +80,12 @@ public class PickupManager : MonoBehaviour {
 
 	public bool UpdateHealth(int health)
 	{
-		playerDamageScript.Health += health;
-		tempHealth.text = playerDamageScript.Health.ToString();
+		if (playerDamageScript.Health + health >= playerDamageScript.MaxHealth) {
+			playerDamageScript.Health = playerDamageScript.MaxHealth;
+		} 
+		else {
+			playerDamageScript.Health += health;
+		}
 
 		return true;
 	}
@@ -89,9 +93,22 @@ public class PickupManager : MonoBehaviour {
 	public void spawnPickup(Vector3 pos)
 	{
 		int index = Random.Range (-1, 2/*Pickup.Count*/);
-
 		if (index >= 0)
 			Instantiate (Pickup [index % Pickup.Count], pos, Quaternion.identity);
+	}
+
+	public void KaBoom(int damage){
+
+		//	player = GameObject.Find("Enemy");
+		GameObject[] Enemies = GameObject.FindGameObjectsWithTag("EnemyAir");
+		foreach (GameObject enemy in Enemies){
+			enemy.GetComponent<DamageScript> ().Health -= damage;
+		}
+		GameObject Boss;
+		if (Boss = GameObject.FindGameObjectWithTag("BigBoss")){
+			Boss.GetComponent<DamageScript> ().Health -= damage;
+		}
+
 	}
 
 }

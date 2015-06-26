@@ -20,7 +20,7 @@ public class BulletDestroy : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll)
 	{
-		Debug.Log ("Collider: " + coll.name);
+//		Debug.Log ("Collider: " + coll.name);
 
 		if ( coll.tag.Length > 12 && coll.tag.Substring(0,12) == "PlayerBullet")		//!!! Need to adjust this according to Bullet TYPE.
 			return;

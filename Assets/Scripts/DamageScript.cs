@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DamageScript : MonoBehaviour {
 
 	private GameObject player = null;
-	private PlayerScript playerScript = null;
-	private EnemyAir enemyAirScript = null;
-	private BossMove bossMoveScript = null;
+	private PlayerScript playerScript = null;		
+	private EnemyAir enemyAirScript = null;			
+	private BossMove bossMoveScript = null;			
+
 
 	private float maxHealth = 0;
 	public float MaxHealth{
@@ -40,6 +43,7 @@ public class DamageScript : MonoBehaviour {
 
 	private float timeToBlink = 0f;
 	private int deathPoints = 0;
+
 
 	public int DeathPoints{
 		get{ return deathPoints; }
@@ -85,7 +89,7 @@ public class DamageScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
-		Debug.Log ("Trigger Collider: "+collider.name);
+		//Debug.Log ("Trigger Collider: "+collider.name);
 
 		if (GameManager.instance.PlayMode != (int)GameManager.Mode.IN_STAGE)
 			return;
@@ -94,6 +98,7 @@ public class DamageScript : MonoBehaviour {
 		case false:
 			if (collider.name.Substring (0, 4) == "Bull") {
 				int damage = collider.GetComponent<BulletMove> ().Damage;
+
 				if(shield > 0)
 				{
 					shield -= damage;
@@ -119,9 +124,11 @@ public class DamageScript : MonoBehaviour {
 			if(enemyAirScript != null)
 				enemyAirScript.CheckRotate();
 			break;
+
 		case true:
 			if (collider.name.Substring (0, 4) == "Bull") {
 				int damage = collider.GetComponent<BulletMove> ().Damage;
+
 				if(shield > 0)
 				{
 					shield -= damage;
@@ -131,10 +138,7 @@ public class DamageScript : MonoBehaviour {
 				else {
 					health  -= damage;
 				}
-				
-//				if (playerScript != null) {
-//					playerScript.Score -= damage;
-//				}
+
 			} else if (collider.tag.Substring (0, 4) != "Pick") {
 				if(shield <= 0)
 				{
@@ -152,9 +156,7 @@ public class DamageScript : MonoBehaviour {
 			}
 			break;
 		}
-
-
-
+			
 		timeToBlink = 2f;
 
 		StopCoroutine("Blink");
@@ -164,14 +166,12 @@ public class DamageScript : MonoBehaviour {
 	}
 
 	void Update() {
-
 		if (health <= 0) {
 			Die();
 		}
 	}
 
 	IEnumerator Blink(float time) {
-
 		renderer.enabled = false;
 		yield return new WaitForSeconds (0.05f);
 		renderer.enabled = true;
