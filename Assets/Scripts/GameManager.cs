@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour {
 		player = GameObject.Find("Player");
 		playerGunMgr = player.GetComponentInChildren<GunManager> ();
 		playerSpawnPos = player.transform.position;
-		playerInitHealth = player.GetComponent<DamageScript> ().health;
+		playerInitHealth = (int)player.GetComponent<DamageScript> ().Health;
 
 
 		GameObject[] spawners = GameObject.FindGameObjectsWithTag ("EnemySpawn");
@@ -154,31 +154,31 @@ public class GameManager : MonoBehaviour {
 			{
 				while(playMode == Mode.NOT_IN_STAGE)
 				{
-					while (isPopupPublishing)
-						yield return null;
-
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Welcome to Pandora, Soldier!");
-
-
-					while (isPopupPublishing)
-						yield return null;
-
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "You've got incoming hostiles!");
-
-
-					while (isPopupPublishing)
-						yield return null;
-					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Get off your Auto pilot!");
-
-					while (isPopupPublishing)
-						yield return null;
-					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Here we go ...");
+//					while (isPopupPublishing)
+//						yield return null;
+//
+//					isPopupPublishing = true;
+//					StartCoroutine("PublishPopupReal", "Welcome to Pandora, Soldier!");
+//
+//
+//					while (isPopupPublishing)
+//						yield return null;
+//
+//					isPopupPublishing = true;
+//					StartCoroutine("PublishPopupReal", "You've got incoming hostiles!");
+//
+//
+//					while (isPopupPublishing)
+//						yield return null;
+//					
+//					isPopupPublishing = true;
+//					StartCoroutine("PublishPopupReal", "Get off your Auto pilot!");
+//
+//					while (isPopupPublishing)
+//						yield return null;
+//					
+//					isPopupPublishing = true;
+//					StartCoroutine("PublishPopupReal", "Here we go ...");
 
 
 					while (isPopupPublishing)
@@ -545,7 +545,7 @@ public class GameManager : MonoBehaviour {
 	{
 		player.transform.position = playerSpawnPos;
 		//player.renderer.enabled = false;
-		player.GetComponent<DamageScript> ().health = playerInitHealth * (stage + 1);
+		player.GetComponent<DamageScript> ().Health = player.GetComponent<DamageScript>().MaxHealth;
 
 		while (isPopupPublishing)
 			yield return null;

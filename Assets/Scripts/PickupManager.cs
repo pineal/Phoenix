@@ -51,12 +51,12 @@ public class PickupManager : MonoBehaviour {
 	}
 
 	//!!! Delete/Manage this variable later
-	private int oldHealth = 0;
+	private float oldHealth = 0;
 	//Use this for Initialization of variables or states only when this script is enabled, and before the first Update is called.
 	void Start () {
 
-		tempHealth.text = playerDamageScript.health.ToString();
-		oldHealth = playerDamageScript.health;
+		tempHealth.text = playerDamageScript.Health.ToString();
+		oldHealth = playerDamageScript.Health;
 		
 	}
 
@@ -70,18 +70,18 @@ public class PickupManager : MonoBehaviour {
 			return;
 		}
 
-		int newHealth = playerDamageScript.health;
+		float newHealth = playerDamageScript.Health;
 
 		if (newHealth != oldHealth) {
-			tempHealth.text = playerDamageScript.health.ToString();
-			oldHealth = playerDamageScript.health;
+			tempHealth.text = playerDamageScript.Health.ToString();
+			oldHealth = playerDamageScript.Health;
 		}
 	}
 
 	public bool UpdateHealth(int health)
 	{
-		playerDamageScript.health += health;
-		tempHealth.text = playerDamageScript.health.ToString();
+		playerDamageScript.Health += health;
+		tempHealth.text = playerDamageScript.Health.ToString();
 
 		return true;
 	}
