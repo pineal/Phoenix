@@ -19,6 +19,9 @@ public class PlayerScript : MonoBehaviour {
 
 	public GameObject UI;
 
+	public Image PausingDarkScreen;
+	private float initAlpha=0f;
+
 	private int score = 0;
 
 	public int Score{
@@ -34,6 +37,10 @@ public class PlayerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
+
+		initAlpha = PausingDarkScreen.color.a;		// 188/255
+		SetDarkScreenAlpha (0);
+
 		score = GameManager.instance.PlayerScore;
 
 		topOfActiveScreen = GameManager.instance.TopOfActiveScreen;
@@ -73,6 +80,7 @@ public class PlayerScript : MonoBehaviour {
 			{
 				UI.SetActive (false);
 				Time.timeScale = 1f;
+				SetDarkScreenAlpha(0);
 			}
 
 			if (topOfActiveScreen >= mousePos.y && !UI.activeSelf) {
@@ -117,7 +125,6 @@ public class PlayerScript : MonoBehaviour {
 
 				dampingForce = (float)((-kDamp) * Vector3.Dot ((myVelocity), vectorToPlayer) / dist) * (vectorToPlayer / (float)dist);
 
-
 				rigidbody2D.AddForce (elasticForce + dampingForce);
 
 
@@ -126,16 +133,21 @@ public class PlayerScript : MonoBehaviour {
 			}
 
 		} else if (playMode == 1) {
-			Time.timeScale = 0.1f;
+
+			SetDarkScreenAlpha( Mathf.Lerp(PausingDarkScreen.color.a, initAlpha, Time.deltaTime*4) );
+
+			Time.timeScale = Mathf.Lerp(Time.timeScale, 0.1f, 0.1f);
+
 
 			if (UI != null && !UI.activeSelf)
 			{
-				UI.SetActive (true);
+				//UI.SetActive (true);
 				inMenu = true;
 			}
 
 		} else {
 			Time.timeScale = 1f;
+			SetDarkScreenAlpha(0);
 			if (UI != null && UI.activeSelf)
 			{
 				UI.SetActive(false);
@@ -143,11 +155,23 @@ public class PlayerScript : MonoBehaviour {
 			}
 		}
 
+		if (Time.timeScale < 0.15f) {
+			SetDarkScreenAlpha(0);
+			UI.SetActive (true);
+		}
+
 
 		//!!! Might need to find a better place for this.
 		Time.fixedDeltaTime = 0.02F * Time.timeScale;
 
 		//setDebugText ();
+	}
+
+	private void SetDarkScreenAlpha(float alpha)
+	{
+		Color col = PausingDarkScreen.color;
+		col.a = alpha;
+		PausingDarkScreen.color = col;
 	}
 
 	private Vector3 oldVel, curVel;

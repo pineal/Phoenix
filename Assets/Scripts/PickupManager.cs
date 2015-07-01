@@ -9,9 +9,9 @@ public class PickupManager : MonoBehaviour {
 	public int level = 0;
 	public int stage = 0;
 	
-	public GameObject canvas;
+	public GameObject canvas;			//!!! Probably need to get rid of this
 	public Text tempHealth;
-	public GameObject pauseUI;
+	public GameObject pauseUI;			//!!! Probably need to get rid of this
 	
 	private float topOfActiveScreen = 0.0f;
 	private float rightOfActiveScreen = 0.0f;
@@ -92,7 +92,7 @@ public class PickupManager : MonoBehaviour {
 
 	public void spawnPickup(Vector3 pos)
 	{
-		int index = Random.Range (-1, 2/*Pickup.Count*/);
+		int index = Random.Range (-2, Pickup.Count+1);
 		if (index >= 0)
 			Instantiate (Pickup [index % Pickup.Count], pos, Quaternion.identity);
 	}

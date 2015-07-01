@@ -13,11 +13,14 @@ public class OnPickup : MonoBehaviour {
 
 	private float rate = 0.2f;
 
+	string myTag;
+
 	// Use this for initialization
 	void Start () {
 		Destroy (gameObject, 5f);
 		myTransform = transform;
 		origScale = myTransform.localScale.x;
+		myTag = this.tag;
 	}
 
 	private bool shrink = true;
@@ -25,20 +28,27 @@ public class OnPickup : MonoBehaviour {
 
 	void Update()
 	{
-		Vector3 scale = myTransform.localScale;
+		int pickup=0;
+		if (! int.TryParse(myTag.Substring(6), out pickup))
+			return;
 
-		if (shrink) {
-			scale.x -= Time.deltaTime * rate;
-			if (scale.x < 0f)
-				shrink = false;
-		} else {
-			scale.x += Time.deltaTime * rate;
-			if (scale.x > origScale)
-				shrink = true;
+		//Only for Health Pickup
+		if (pickup == 0) {
+			Vector3 scale = myTransform.localScale;
+
+			if (shrink) {
+				scale.x -= Time.deltaTime * rate;
+				if (scale.x < 0f)
+					shrink = false;
+			} else {
+				scale.x += Time.deltaTime * rate;
+				if (scale.x > origScale)
+					shrink = true;
+			}
+
+			rate += (Time.deltaTime * 0.1f);
+			myTransform.localScale = scale;
 		}
-
-		rate += (Time.deltaTime * 0.1f);
-		myTransform.localScale = scale;
 	}
 	
 	void OnTriggerEnter2D(Collider2D collider)
@@ -47,7 +57,7 @@ public class OnPickup : MonoBehaviour {
 
 			int pickup = 0;
 
-			if (! int.TryParse(this.tag.Substring(6), out pickup))
+			if (! int.TryParse(myTag.Substring(6), out pickup))
 			    return;
 
 			switch (pickup)
