@@ -58,7 +58,7 @@ public class EnemyAir : MonoBehaviour {
 
 		//For Rotate
 		damSc = GetComponent<DamageScript> ();
-		thresholdHealth = (int)(0.6f * damSc.health);
+		thresholdHealth = (int)(0.6f * damSc.MaxHealth);
 
 		//For Move
 		left = new Vector3(-rightOfScreen+0.75f, topOfScreen-1.5f, 4f);
@@ -131,7 +131,7 @@ public class EnemyAir : MonoBehaviour {
 
 	public void CheckRotate()
 	{
-		if (damSc.health <= thresholdHealth && !isRotate) {
+		if (damSc.Health <= thresholdHealth && !isRotate) {
 
 			isRotate = (Random.Range(0,10) <= 6) ? true : false;		//30% Chance to Rotate
 		}

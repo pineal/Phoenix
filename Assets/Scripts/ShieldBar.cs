@@ -26,7 +26,7 @@ public class ShieldBar : MonoBehaviour {
 		playerDamageScript = player.GetComponent<DamageScript> ();
 
 		startPos = castBar.position;
-		maxValue = playerDamageScript.shield;
+		maxValue = playerDamageScript.MaxShield;
 		curValue = maxValue;
 	
 		tempShield.text = maxValue.ToString();
@@ -36,7 +36,7 @@ public class ShieldBar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		curValue = playerDamageScript.shield;
+		curValue = playerDamageScript.Shield;
 		tempShield.text = curValue.ToString();
 
 		if (curValue > -1) {

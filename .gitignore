@@ -37,3 +37,9 @@ PhoenixBuild/
 *.csproj
 *.sln
 =======
+
+Assets/Scenes/Scene01.unity
+
+Assets/Audio.meta
+
+Assets/Scenes/Scene01_Daniyal.unity

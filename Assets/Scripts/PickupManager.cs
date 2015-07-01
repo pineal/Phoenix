@@ -56,8 +56,8 @@ public class PickupManager : MonoBehaviour {
 
 	void Start () {
 
-		tempHealth.text = playerDamageScript.health.ToString();
-		oldHealth = playerDamageScript.health;
+		tempHealth.text = playerDamageScript.Health.ToString();
+		oldHealth = playerDamageScript.Health;
 		
 	}
 	
@@ -70,24 +70,23 @@ public class PickupManager : MonoBehaviour {
 			return;
 		}
 
-		float newHealth = playerDamageScript.health;
+		float newHealth = playerDamageScript.Health;
 
 		if (newHealth != oldHealth) {
-			tempHealth.text = playerDamageScript.health.ToString();
-			oldHealth = playerDamageScript.health;
+			tempHealth.text = playerDamageScript.Health.ToString();
+			oldHealth = playerDamageScript.Health;
 		}
 	}
 
 	public bool UpdateHealth(int health)
 	{
-		if (playerDamageScript.health + health >= playerDamageScript.MAXHEALTH) {
-			playerDamageScript.health = playerDamageScript.MAXHEALTH;
+		if (playerDamageScript.Health + health >= playerDamageScript.MaxHealth) {
+			playerDamageScript.Health = playerDamageScript.MaxHealth;
 		} 
 		else {
-			playerDamageScript.health += health;
+			playerDamageScript.Health += health;
 		}
 
-		tempHealth.text = playerDamageScript.health.ToString();
 		return true;
 	}
 
@@ -96,6 +95,20 @@ public class PickupManager : MonoBehaviour {
 		int index = Random.Range (-1, 2/*Pickup.Count*/);
 		if (index >= 0)
 			Instantiate (Pickup [index % Pickup.Count], pos, Quaternion.identity);
+	}
+
+	public void KaBoom(int damage){
+
+		//	player = GameObject.Find("Enemy");
+		GameObject[] Enemies = GameObject.FindGameObjectsWithTag("EnemyAir");
+		foreach (GameObject enemy in Enemies){
+			enemy.GetComponent<DamageScript> ().Health -= damage;
+		}
+		GameObject Boss;
+		if (Boss = GameObject.FindGameObjectWithTag("BigBoss")){
+			Boss.GetComponent<DamageScript> ().Health -= damage;
+		}
+
 	}
 
 }

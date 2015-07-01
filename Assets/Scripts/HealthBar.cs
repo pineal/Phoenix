@@ -23,14 +23,14 @@ public class HealthBar : MonoBehaviour {
 		playerDamageScript = player.GetComponent<DamageScript> ();
 
 		startPos = castBar.position;
-		maxValue = playerDamageScript.health;
+		maxValue = playerDamageScript.MaxHealth;
 		curValue = maxValue;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		curValue = playerDamageScript.health;
+		curValue = playerDamageScript.Health;
 		//lerp the bar
 		Vector3 lerpVec = Vector3.Lerp (startPos, maskBar.position, ((maxValue - curValue) / maxValue));
 		//having the lerping animation 

@@ -11,17 +11,39 @@ public class DamageScript : MonoBehaviour {
 	private BossMove bossMoveScript = null;			
 
 
+	private float maxHealth = 0;
+	public float MaxHealth{
+		get{ return maxHealth; }
+	}
+	private float health = 20f;
+	public float Health{
+		get{ return health; }
+		set{ health = value; }
+	}
+
+	//Shield
+	private float maxShield = 10f;
+	public float MaxShield{
+		get{ return maxShield; }
+	}
+	private float shield = 5f;
+	public float Shield{
+		get{ return shield; }
+		set{ shield = value; }
+	}
+
+	private float shieldDelay = 3f;
+	private float shieldRechargeRate = 0.8f;
+	public float ShieldRechargeRate {
+		get{ return shieldRechargeRate; }
+	}
+	public float ShieldDelay {
+		get{ return shieldDelay; }
+	}
 
 	private float timeToBlink = 0f;
 	private int deathPoints = 0;
 
-	public float health = 10.0f;
-	public float MAXHEALTH = 10.0f;
-	public float shield = 10.0f;
-	public float MAXSHILED = 10.0f;
-	private float rate = 0.5f;
-
-	public Text tempShield;
 
 	public int DeathPoints{
 		get{ return deathPoints; }
@@ -39,11 +61,13 @@ public class DamageScript : MonoBehaviour {
 			deathPoints = 10;
 			isPlayer = false;
 			enemyAirScript = GetComponent<EnemyAir>();
+			shield = 0;
 		} else if (transform.tag.Substring (0, 3) == "Big") {
 			deathPoints = 50;
 			isPlayer = false;
 			isBoss = true;
 			bossMoveScript = GetComponent<BossMove>();
+			shield = 0;
 		}
 		else {
 			isPlayer = true;
@@ -57,6 +81,9 @@ public class DamageScript : MonoBehaviour {
 		}
 
 		myTransform = transform;
+
+		maxHealth = (float)health;
+		maxShield = shield;
 	}
 
 
@@ -71,12 +98,25 @@ public class DamageScript : MonoBehaviour {
 		case false:
 			if (collider.name.Substring (0, 4) == "Bull") {
 				int damage = collider.GetComponent<BulletMove> ().Damage;
-				health -= damage;
+
+				if(shield > 0)
+				{
+					shield -= damage;
+					StopCoroutine("ShieldRecharge");
+					StartCoroutine("ShieldRecharge");
+				}
+				else
+					health -= damage;
+
 				if (playerScript != null) {
 					playerScript.Score += damage;
 				}
 			} else {
-				health -= 3;
+				if (shield > 0)
+					shield -= 3;
+				else
+					health -= 3;
+
 				if (playerScript != null) {
 					playerScript.Score += 1;
 				}
@@ -88,25 +128,44 @@ public class DamageScript : MonoBehaviour {
 		case true:
 			if (collider.name.Substring (0, 4) == "Bull") {
 				int damage = collider.GetComponent<BulletMove> ().Damage;
-				if (shield - damage > 0){
+
+				if(shield > 0)		//Shield Exists
+				{
 					shield -= damage;
-					print ("shield" + shield);
-					print ("health" + health);
-				}
-				else {
-					shield = 0;
-					health -= (damage - shield);
-					print ("shield" + shield);
-					print ("health" + health);
+					StopCoroutine("ShieldRecharge");
+					StartCoroutine("ShieldRecharge");
 
 				}
-				//health -= damage;
+				else 				//Shield is Absent
+				{
+					health  -= damage;
+				}
+
 				
-//				if (playerScript != null) {
-//					playerScript.Score -= damage;
-//				}
+				if(shield < 0) //Incase damage was more than shield capacity this frame;
+				{
+					health += shield;
+					shield = 0;
+				}
+
 			} else if (collider.tag.Substring (0, 4) != "Pick") {
-				health -= 7;
+				if(shield > 0)		//Shield exists
+				{
+					shield -= 7;
+					StopCoroutine("ShieldRecharge");
+					StartCoroutine("ShieldRecharge");
+
+				}
+				else 				//Shield is absent
+				{
+					health -= 7;
+				}
+
+				if (shield < 0)		//Incase damage was more than shield capacity this frame;
+				{
+					health += shield;
+					shield = 0;
+				}
 //				if (playerScript != null) {
 //					playerScript.Score -= 5;
 //				}
@@ -115,10 +174,10 @@ public class DamageScript : MonoBehaviour {
 		}
 			
 		timeToBlink = 2f;
-		StopAllCoroutines();
+
+		StopCoroutine("Blink");
 		renderer.enabled = true;
-		//StartCoroutine ( Blink(timeToBlink) );
-		StartCoroutine ( Recharge(timeToBlink) );
+		StartCoroutine ( "Blink", timeToBlink );
 
 	}
 
@@ -134,6 +193,18 @@ public class DamageScript : MonoBehaviour {
 		renderer.enabled = true;
 	}
 
+	IEnumerator ShieldRecharge()
+	{
+		yield return new WaitForSeconds (shieldDelay);
+
+		while (shield < maxShield) {
+			shield += shieldRechargeRate * Time.deltaTime;
+			yield return null;
+		}
+		shield = maxShield;
+		yield break;
+	}
+
 	void Die()
 	{
 		if(playerScript != null)
@@ -146,12 +217,5 @@ public class DamageScript : MonoBehaviour {
 		}	
 		else
 			GameManager.instance.GameOver ();
-	}
-
-	IEnumerator Recharge(float delay){
-		yield return new WaitForSeconds (delay);
-		while ((shield += rate * Time.deltaTime) < MAXSHILED) {
-			yield return null;
-		}
 	}
 }

@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour {
 	public int level = 0;
 	public int stage = 0;
 
+	public GameObject DialogMgrGO;
+	private DialogManager dlgMgr = null;
+
 	public GameObject canvas;
 	public Text popupText;
 	public GameObject pauseUI;
@@ -55,7 +58,7 @@ public class GameManager : MonoBehaviour {
 	private bool isPopupPublishing = false;
 
 
-	public enum Mode {NOT_IN_STAGE, IN_STAGE, LEVEL_WIN, LEVEL_LOSS, RESPAWNING, LEVEL_START};
+	public enum Mode {NOT_IN_STAGE, IN_STAGE, LEVEL_WIN, LEVEL_LOSS, RESPAWNING, LEVEL_START, DIALOG_ACTIVE};
 
 	private Mode playMode;
 
@@ -79,7 +82,7 @@ public class GameManager : MonoBehaviour {
 		player = GameObject.Find("Player");
 		playerGunMgr = player.GetComponentInChildren<GunManager> ();
 		playerSpawnPos = player.transform.position;
-		playerInitHealth = player.GetComponent<DamageScript> ().health;
+		playerInitHealth = (int)player.GetComponent<DamageScript> ().Health;
 
 
 		GameObject[] spawners = GameObject.FindGameObjectsWithTag ("EnemySpawn");
@@ -122,6 +125,10 @@ public class GameManager : MonoBehaviour {
 		//Set Play Mode
 		playMode = Mode.LEVEL_START;
 
+		//Retrieve and Reset Dialog Manager
+		dlgMgr = DialogMgrGO.GetComponent<DialogManager> ();
+		dlgMgr.ResetDialogBox ();
+
 
 	}
 
@@ -140,8 +147,6 @@ public class GameManager : MonoBehaviour {
 			playMode = Mode.NOT_IN_STAGE;
 			StartCoroutine("UpdateStage");
 		}
-
-		KaBoom ();
 	}
 
 	//Layout of Level
@@ -155,35 +160,55 @@ public class GameManager : MonoBehaviour {
 			{
 				while(playMode == Mode.NOT_IN_STAGE)
 				{
-//					while (isPopupPublishing)
+//					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+//					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 //						yield return null;
 //
-//					isPopupPublishing = true;
-//					StartCoroutine("PublishPopupReal", "Welcome to Pandora, Soldier!");
+//					dlgMgr.ActivateDialogBox("Welcome to Pandora, Soldier!!");
 //
+//					yield return new WaitForSeconds(3.5f);
+//					dlgMgr.DeactivateDialogBox();
 //
-//					while (isPopupPublishing)
+//					//******
+//
+//					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+//					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 //						yield return null;
 //
-//					isPopupPublishing = true;
-//					StartCoroutine("PublishPopupReal", "You've got incoming hostiles!");
+////					isPopupPublishing = true;
+////					StartCoroutine("PublishPopupReal", "You've got incoming hostiles!");
+//					dlgMgr.ActivateDialogBox("You've got incoming hostiles!");
+//					
+//					yield return new WaitForSeconds(3.5f);
+//					dlgMgr.DeactivateDialogBox();
 //
+//					//*****
 //
-//					while (isPopupPublishing)
+//					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+//					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 //						yield return null;
 //					
-//					isPopupPublishing = true;
-//					StartCoroutine("PublishPopupReal", "Get off your Auto pilot!");
+//					dlgMgr.ActivateDialogBox("Get off your Auto pilot, Soldier!!");
+//					
+//					yield return new WaitForSeconds(3.5f);
+//					dlgMgr.DeactivateDialogBox();
 //
-//					while (isPopupPublishing)
+//					//*****
+//
+//					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+//					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 //						yield return null;
 //					
-//					isPopupPublishing = true;
-//					StartCoroutine("PublishPopupReal", "Here we go ...");
+//					dlgMgr.ActivateDialogBox("Here we go ...");
+//					
+//					yield return new WaitForSeconds(3.5f);
+//					dlgMgr.DeactivateDialogBox();
 //
+					//*****
 
-					while (isPopupPublishing)
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE)
 						yield return null;
+
 					playMode = Mode.IN_STAGE;
 				}
 
@@ -211,36 +236,31 @@ public class GameManager : MonoBehaviour {
 				//Pre-Stage Messages
 				while(playMode == Mode.NOT_IN_STAGE)
 				{
-					while (isPopupPublishing)
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 						yield return null;
 					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Good Job!");
+					dlgMgr.ActivateDialogBox("Good Job!! Take a breather ...");
+					
+					yield return new WaitForSeconds(3.5f);
+					dlgMgr.DeactivateDialogBox();
 
+					//*****
 
-					while (isPopupPublishing)
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 						yield return null;
 					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Take a breather!");
+					dlgMgr.ActivateDialogBox("Second Wave Incoming ...\nAll Hands on Deck ...");
+					
+					yield return new WaitForSeconds(3.5f);
+					dlgMgr.DeactivateDialogBox();
 
-					yield return new WaitForSeconds(3f);
+					//*****
 
-					while (isPopupPublishing)
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE)
 						yield return null;
-					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Second Wave Incoming!");
 
-					while (isPopupPublishing)
-						yield return null;
-					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "All Hands on Deck!");
-					
-					
-					while (isPopupPublishing)
-						yield return null;
 					playMode = Mode.IN_STAGE;
 				}
 
@@ -268,36 +288,42 @@ public class GameManager : MonoBehaviour {
 				//Pre-Stage Messages
 				while(playMode == Mode.NOT_IN_STAGE)
 				{
-					while (isPopupPublishing)
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 						yield return null;
 					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "You've got some moves, hunter!");
+					dlgMgr.ActivateDialogBox("You've got some moves, hunter!");
 					
+					yield return new WaitForSeconds(3.5f);
+					dlgMgr.DeactivateDialogBox();
 					
-					while (isPopupPublishing)
+					//*****
+
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 						yield return null;
 					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "We could use someone like you");
+					dlgMgr.ActivateDialogBox("We could definitely use someone like you");
 					
-					yield return new WaitForSeconds(3f);
+					yield return new WaitForSeconds(3.5f);
+					dlgMgr.DeactivateDialogBox();
 					
-					while (isPopupPublishing)
+					//*****
+					
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 						yield return null;
 					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Next Wave Incoming!");
+					dlgMgr.ActivateDialogBox("Next Wave Incoming!\nGet Ready, Soldier!! ");
 					
-					while (isPopupPublishing)
+					yield return new WaitForSeconds(3.5f);
+					dlgMgr.DeactivateDialogBox();
+					
+					//*****
+					
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE)
 						yield return null;
-					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Hands on Deck!");
-					
-					
-					while (isPopupPublishing)
-						yield return null;
+
 					playMode = Mode.IN_STAGE;
 				}
 
@@ -323,36 +349,43 @@ public class GameManager : MonoBehaviour {
 				//Pre-Stage Messages
 				while(playMode == Mode.NOT_IN_STAGE)
 				{
-					while (isPopupPublishing)
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 						yield return null;
 					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Whoa ...");
+					dlgMgr.ActivateDialogBox("Whoa boy!!");
 					
+					yield return new WaitForSeconds(3.5f);
+					dlgMgr.DeactivateDialogBox();
 					
-					while (isPopupPublishing)
+					//*****
+					
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 						yield return null;
 					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "You've got a big one heading your way");
+					dlgMgr.ActivateDialogBox("You've got a big one heading your way");
 					
-					yield return new WaitForSeconds(3f);
+					yield return new WaitForSeconds(3.5f);
+					dlgMgr.DeactivateDialogBox();
 					
-					while (isPopupPublishing)
+					//*****
+					
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
 						yield return null;
 					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Incoming!");
+					dlgMgr.ActivateDialogBox("Get on your control deck, kid!! \nHere you go ...");
 					
-					while (isPopupPublishing)
+					yield return new WaitForSeconds(3.5f);
+					dlgMgr.DeactivateDialogBox();
+					
+					//*****
+					
+					
+					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE)
 						yield return null;
-					
-					isPopupPublishing = true;
-					StartCoroutine("PublishPopupReal", "Hands on Deck!");
-					
-					
-					while (isPopupPublishing)
-						yield return null;
+
 					playMode = Mode.IN_STAGE;
 				}
 
@@ -546,7 +579,7 @@ public class GameManager : MonoBehaviour {
 	{
 		player.transform.position = playerSpawnPos;
 		//player.renderer.enabled = false;
-		player.GetComponent<DamageScript> ().health = playerInitHealth * (stage + 1);
+		player.GetComponent<DamageScript> ().Health = player.GetComponent<DamageScript>().MaxHealth;
 
 		while (isPopupPublishing)
 			yield return null;
@@ -587,19 +620,4 @@ public class GameManager : MonoBehaviour {
 		playerScore += score;
 	}
 
-	void KaBoom(){
-		if (Input.GetKeyDown(KeyCode.Return)){
-			//	player = GameObject.Find("Enemy");
-			GameObject[] Enemies = GameObject.FindGameObjectsWithTag("EnemyAir");
-			foreach (GameObject enemy in Enemies){
-				enemy.GetComponent<DamageScript> ().health -= 100;
-			}
-			GameObject Boss;
-			if (Boss = GameObject.FindGameObjectWithTag("BigBoss")){
-				Boss.GetComponent<DamageScript> ().health -= 100;
-			}
-
-
-		}
-	}
 }

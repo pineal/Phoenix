@@ -95,11 +95,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 610f5aadd961c4136a25b9ddedacac8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 1
+  level: 0
   stage: 0
+  DialogMgrGO: {fileID: 0}
+  canvas: {fileID: 0}
+  popupText: {fileID: 0}
+  pauseUI: {fileID: 0}
   Enemies:
-  - {fileID: 161242, guid: 252d8f0be202746e2a4fc8ff6ef75a96, type: 2}
+  - {fileID: 0}
+  BigBoss:
+  - {fileID: 168992, guid: 93184dc53d118486fa42dfc2ca64e945, type: 2}
   checkpointsPassed: 0
+  playerGunMgr: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
