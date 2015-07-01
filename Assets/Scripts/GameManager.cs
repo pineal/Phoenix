@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour {
 //					
 //					yield return new WaitForSeconds(3.5f);
 //					dlgMgr.DeactivateDialogBox();
-//
+
 					//*****
 
 					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE)

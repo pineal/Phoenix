@@ -25,8 +25,6 @@ public class DialogManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Active () {
-
-	
 		dlgBoxRT = DialogBox.GetComponent<RectTransform> ();
 		title = DialogTitle.GetComponent<Text> ();
 		text = DialogText.GetComponent<Text> ();
