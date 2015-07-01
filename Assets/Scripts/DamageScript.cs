@@ -129,26 +129,42 @@ public class DamageScript : MonoBehaviour {
 			if (collider.name.Substring (0, 4) == "Bull") {
 				int damage = collider.GetComponent<BulletMove> ().Damage;
 
-				if(shield > 0)
+				if(shield > 0)		//Shield Exists
 				{
 					shield -= damage;
 					StopCoroutine("ShieldRecharge");
 					StartCoroutine("ShieldRecharge");
+
 				}
-				else {
+				else 				//Shield is Absent
+				{
 					health  -= damage;
 				}
 
-			} else if (collider.tag.Substring (0, 4) != "Pick") {
-				if(shield <= 0)
+				
+				if(shield < 0) //Incase damage was more than shield capacity this frame;
 				{
-					health -= 7;
+					health += shield;
+					shield = 0;
 				}
-				else
+
+			} else if (collider.tag.Substring (0, 4) != "Pick") {
+				if(shield > 0)		//Shield exists
 				{
 					shield -= 7;
 					StopCoroutine("ShieldRecharge");
 					StartCoroutine("ShieldRecharge");
+
+				}
+				else 				//Shield is absent
+				{
+					health -= 7;
+				}
+
+				if (shield < 0)		//Incase damage was more than shield capacity this frame;
+				{
+					health += shield;
+					shield = 0;
 				}
 //				if (playerScript != null) {
 //					playerScript.Score -= 5;

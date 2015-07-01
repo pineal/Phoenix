@@ -67,8 +67,6 @@ public class PlayerScript : MonoBehaviour {
 		if (Input.GetButton ("Fire1") && playMode == 1) {
 			//Debug.Log ("fire button");
 
-
-
 			Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
 			if(UI != null && UI.activeSelf && !CheckIfClickInRect(Input.mousePosition))
