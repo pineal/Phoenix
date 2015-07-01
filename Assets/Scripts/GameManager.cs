@@ -160,50 +160,50 @@ public class GameManager : MonoBehaviour {
 			{
 				while(playMode == Mode.NOT_IN_STAGE)
 				{
-					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
-					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
-						yield return null;
-
-					dlgMgr.ActivateDialogBox("Welcome to Pandora, Soldier!!");
-
-					yield return new WaitForSeconds(3.5f);
-					dlgMgr.DeactivateDialogBox();
-
-					//******
-
-					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
-					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
-						yield return null;
-
-//					isPopupPublishing = true;
-//					StartCoroutine("PublishPopupReal", "You've got incoming hostiles!");
-					dlgMgr.ActivateDialogBox("You've got incoming hostiles!");
-					
-					yield return new WaitForSeconds(3.5f);
-					dlgMgr.DeactivateDialogBox();
-
-					//*****
-
-					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
-					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
-						yield return null;
-					
-					dlgMgr.ActivateDialogBox("Get off your Auto pilot, Soldier!!");
-					
-					yield return new WaitForSeconds(3.5f);
-					dlgMgr.DeactivateDialogBox();
-
-					//*****
-
-					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
-					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
-						yield return null;
-					
-					dlgMgr.ActivateDialogBox("Here we go ...");
-					
-					yield return new WaitForSeconds(3.5f);
-					dlgMgr.DeactivateDialogBox();
-
+//					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+//					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
+//						yield return null;
+//
+//					dlgMgr.ActivateDialogBox("Welcome to Pandora, Soldier!!");
+//
+//					yield return new WaitForSeconds(3.5f);
+//					dlgMgr.DeactivateDialogBox();
+//
+//					//******
+//
+//					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+//					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
+//						yield return null;
+//
+////					isPopupPublishing = true;
+////					StartCoroutine("PublishPopupReal", "You've got incoming hostiles!");
+//					dlgMgr.ActivateDialogBox("You've got incoming hostiles!");
+//					
+//					yield return new WaitForSeconds(3.5f);
+//					dlgMgr.DeactivateDialogBox();
+//
+//					//*****
+//
+//					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+//					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
+//						yield return null;
+//					
+//					dlgMgr.ActivateDialogBox("Get off your Auto pilot, Soldier!!");
+//					
+//					yield return new WaitForSeconds(3.5f);
+//					dlgMgr.DeactivateDialogBox();
+//
+//					//*****
+//
+//					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE && 
+//					       dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.DEACTIVATING)
+//						yield return null;
+//					
+//					dlgMgr.ActivateDialogBox("Here we go ...");
+//					
+//					yield return new WaitForSeconds(3.5f);
+//					dlgMgr.DeactivateDialogBox();
+//
 					//*****
 
 					while (dlgMgr.DialogBoxProcess != DialogManager.DialogBoxProcesses.INACTIVE)

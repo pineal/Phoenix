@@ -64,7 +64,7 @@ public class PlayerScript : MonoBehaviour {
 		playMode = (int)GameManager.instance.PlayMode;
 
 
-		if (Input.GetButton ("Fire1") && playMode == 1) {
+		if (Input.GetButton ("Fire1") && playMode == (int)GameManager.Mode.IN_STAGE) {
 			//Debug.Log ("fire button");
 
 			Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);

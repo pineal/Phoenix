@@ -83,7 +83,7 @@ public class DialogManager : MonoBehaviour {
 		process = DialogBoxProcesses.ACTIVATING;
 
 		while (dlgBoxRT.anchoredPosition.x < (activePosition.x-0.2f)) {
-			dlgBoxRT.anchoredPosition = Vector2.Lerp(dlgBoxRT.anchoredPosition, activePosition, Time.deltaTime*2);
+			dlgBoxRT.anchoredPosition = Vector2.Lerp(dlgBoxRT.anchoredPosition, activePosition, Time.deltaTime*4);
 			yield return null;
 		}
 
@@ -101,7 +101,7 @@ public class DialogManager : MonoBehaviour {
 		process = DialogBoxProcesses.DEACTIVATING;
 		
 		while (dlgBoxRT.anchoredPosition.x > (inactivePosition.x+0.2f)) {
-			dlgBoxRT.anchoredPosition = Vector2.Lerp(dlgBoxRT.anchoredPosition, inactivePosition, Time.deltaTime*2);
+			dlgBoxRT.anchoredPosition = Vector2.Lerp(dlgBoxRT.anchoredPosition, inactivePosition, Time.deltaTime*6);
 			yield return null;
 		}
 
