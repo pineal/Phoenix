@@ -60,7 +60,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 161242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.62, y: 1.52999997, z: 4}
+  m_LocalPosition: {x: 1.62, y: 10.9099998, z: 4}
   m_LocalScale: {x: .400000006, y: .400000006, z: 1}
   m_Children:
   - {fileID: 479172}
@@ -128,7 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cecd4a26cf7654466a220b0d3eef9126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
 --- !u!114 &11479172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,7 +142,6 @@ MonoBehaviour:
   fireInterval: .100000001
   speed: 5
   damage: 1
-  type: 0
   prob: 0
   burstAmt: 3
   burstInterval: .5
@@ -189,6 +187,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04447ea6ddb7744e68ee6eab47579896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NormalDamageFactor: 1
+  FieryDamageFactor: .699999988
+  CorrosiveDamageFactor: 1.29999995
+  ShockerDamageFactor: .800000012
+  ChillerDamageFactor: .600000024
 --- !u!212 &21261242
 SpriteRenderer:
   m_ObjectHideFlags: 1

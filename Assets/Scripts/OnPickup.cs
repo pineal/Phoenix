@@ -68,7 +68,7 @@ public class OnPickup : MonoBehaviour {
 		}
 
 		if (collectAll && player != null) {
-			myTransform.position = Vector3.Lerp(myTransform.position, player.transform.position, 0.1f);
+			myTransform.position = Vector3.Lerp(myTransform.position, player.transform.position, 0.07f);
 		}
 
 	}

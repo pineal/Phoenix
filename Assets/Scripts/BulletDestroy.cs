@@ -25,6 +25,9 @@ public class BulletDestroy : MonoBehaviour {
 		if ( coll.tag.Length > 12 && coll.tag.Substring(0,12) == "PlayerBullet")		//!!! Need to adjust this according to Bullet TYPE.
 			return;
 
+		if (coll.tag.Length > 4 && coll.tag.Substring (0, 4) == "Expl")
+			return;
+
 		gameObject.SetActive (false);
 	}
 

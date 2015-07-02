@@ -22,9 +22,9 @@ public class PlayerScript : MonoBehaviour {
 	public Image PausingDarkScreen;
 	private float initAlpha=0f;
 
-	private int score = 0;
+	private float score = 0f;
 
-	public int Score{
+	public float Score{
 		get{ return score; }
 		set{ score = value; }
 	}
@@ -168,7 +168,7 @@ public class PlayerScript : MonoBehaviour {
 		if (scoreText == null)
 			return;
 		else {
-			scoreText.text = score.ToString("D9");
+			scoreText.text = ((int)score).ToString("D9");
 		}
 	}
 
@@ -212,7 +212,7 @@ public class PlayerScript : MonoBehaviour {
 		if (scoreText == null)
 			return;
 		else {
-			scoreText.text = score.ToString("D9");
+			scoreText.text = ((int)score).ToString("D9");
 		}
 
 	}
@@ -230,6 +230,6 @@ public class PlayerScript : MonoBehaviour {
 
 	private void OnDisable()
 	{
-		GameManager.instance.PlayerScore = score;
+		GameManager.instance.PlayerScore = (int)score;
 	}
 }

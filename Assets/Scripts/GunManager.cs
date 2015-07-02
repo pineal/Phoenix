@@ -19,7 +19,7 @@ public class GunManager : MonoBehaviour {
 	public float fireInterval = 0.1f;
 
 	public float speed = 5f;
-	public int damage = 1;
+	public float damage = 1f;
 
 	public enum Bullet{NORMAL, CORROSIVE, SHOCKER, FIERY, CHILLER}		//Do not change. If you do, keep in mind the impact it will have in BulletAnimation
 	private Bullet type = Bullet.NORMAL;		//0 - Normal ; 1 - Corrosion ; 2 - Electricity ; 3 - Fire ; 4 - Freeze
@@ -70,9 +70,9 @@ public class GunManager : MonoBehaviour {
 		switch (type) {
 		case Bullet.NORMAL:
 		{
-			fireInterval = 0.25f;
-			speed = 10f;
-			damage = 1;
+			fireInterval = maxFireInterval * 5f;
+			speed = maxSpeed * (2f/3f);
+			damage = maxDamage * 0.1f;
 
 //			fireInterval = MaxFireInterval;
 //			speed = MaxSpeed;
@@ -86,9 +86,43 @@ public class GunManager : MonoBehaviour {
 		}
 		case Bullet.CORROSIVE:
 		{
-			fireInterval = 0.5f;
-			speed = 7.5f;
-			damage = 5;
+			//fireInterval = maxFireInterval * 10f;
+			fireInterval = maxFireInterval * 5f;
+			speed = maxSpeed * 0.5f;
+			damage = maxDamage * 0.4f;
+			prob = 0f;
+			burstAmt = 0;
+			burstInterval = 0.5f;
+			
+			break;
+		}
+		case Bullet.FIERY:
+		{
+			fireInterval = maxFireInterval * 6f;
+			speed = maxSpeed * 0.3f;
+			damage = maxDamage * 0.2f;
+			prob = 0f;
+			burstAmt = 0;
+			burstInterval = 0.5f;
+			
+			break;
+		}
+		case Bullet.SHOCKER:
+		{
+			fireInterval = maxFireInterval * 7f;
+			speed = maxSpeed * 0.2f;
+			damage = maxDamage * 0.25f;
+			prob = 0f;
+			burstAmt = 0;
+			burstInterval = 0.5f;
+			
+			break;
+		}
+		case Bullet.CHILLER:
+		{
+			fireInterval = maxFireInterval * 6.5f;
+			speed = maxSpeed * 0.3f;
+			damage = maxDamage * 0.2f;
 			prob = 0f;
 			burstAmt = 0;
 			burstInterval = 0.5f;
@@ -97,9 +131,9 @@ public class GunManager : MonoBehaviour {
 		}
 		default:
 		{
-			fireInterval = 0.1f;
-			speed = 15f;
-			damage = 1;
+			fireInterval = maxFireInterval * 5f;
+			speed = maxSpeed * (2f/3f);
+			damage = maxDamage * 0.1f;
 			prob = 0f;
 			burstAmt = 0;
 			burstInterval = 0.5f;

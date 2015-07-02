@@ -6,10 +6,10 @@ public class BulletMove : MonoBehaviour {
 	private Transform myTransform;
 
 	private int bulletType = -1;
-	private int damage = 1;
+	private float damage = 1f;
 	private Transform left;
 	private Transform right;
-	public int Damage{ 
+	public float Damage{ 
 		get{ return damage; } 
 		set{ damage = value; }
 	}

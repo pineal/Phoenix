@@ -42,13 +42,19 @@ public class EnemyAir : MonoBehaviour {
 	private bool flag = false;
 	Vector3 left, right, top;
 
+	public float NormalDamageFactor = 1f;
+	public float FieryDamageFactor = 1f;
+	public float CorrosiveDamageFactor = 1f;
+	public float ShockerDamageFactor = 1f;
+	public float ChillerDamageFactor = 1f;
+
 
 	//Bullet Damage Factors
-	public Dictionary<GunManager.Bullet, float> DamageFactor = new Dictionary<GunManager.Bullet, float>
+	private Dictionary<GunManager.Bullet, float> DamageFactor = new Dictionary<GunManager.Bullet, float>
 	{
 		{GunManager.Bullet.NORMAL	, 1f	}, 
 		{GunManager.Bullet.FIERY	, 0.7f	},
-		{GunManager.Bullet.CORROSIVE, 0.8f	},
+		{GunManager.Bullet.CORROSIVE, 1.3f	},
 		{GunManager.Bullet.SHOCKER	, 0.8f	},
 		{GunManager.Bullet.CHILLER	, 0.6f	}
 	};
@@ -87,6 +93,14 @@ public class EnemyAir : MonoBehaviour {
 		top = new Vector3 (0 ,topOfScreen, 4f);
 		if (myTransform.position.y > topOfScreen)
 			onBoard = false;
+
+		//SetDamageFactors
+		DamageFactor [GunManager.Bullet.NORMAL] 	= NormalDamageFactor;
+		DamageFactor [GunManager.Bullet.FIERY] 		= FieryDamageFactor;
+		DamageFactor [GunManager.Bullet.SHOCKER] 	= ShockerDamageFactor;
+		DamageFactor [GunManager.Bullet.CORROSIVE] 	= CorrosiveDamageFactor;
+		DamageFactor [GunManager.Bullet.CHILLER] 	= ChillerDamageFactor;
+
 	}
 
 	// Update is called once per frame

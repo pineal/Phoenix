@@ -28,8 +28,12 @@ public class PickupManager : MonoBehaviour {
 	private GameObject player = null;
 	private DamageScript playerDamageScript = null;
 
+	private Vector3 originPosition;
+	private Quaternion originRotation;
+	private float shake_decay;
+	private float shake_intensity;
+	private Transform CamTransform;
 
-	
 	// Use this for initialization even if game has not been set up yet, or this script is not enabled.
 	void Awake() {
 		
@@ -47,7 +51,10 @@ public class PickupManager : MonoBehaviour {
 		topOfActiveScreen = Camera.main.orthographicSize - 1.5f;
 		rightOfActiveScreen = Camera.main.orthographicSize * ((float)Screen.width / (float)Screen.height);
 
-		
+		//For Camera-Shake
+		CamTransform = Camera.main.transform;
+		originPosition = CamTransform.position;
+		originRotation = CamTransform.rotation;
 	}
 
 	//!!! Delete/Manage this variable later
@@ -97,13 +104,58 @@ public class PickupManager : MonoBehaviour {
 		//	player = GameObject.Find("Enemy");
 		GameObject[] Enemies = GameObject.FindGameObjectsWithTag("EnemyAir");
 		foreach (GameObject enemy in Enemies){
-			enemy.GetComponent<DamageScript> ().TakeDamage(damage);
+			enemy.GetComponent<DamageScript> ().TakeHealthDamage(damage);
 		}
 		GameObject Boss;
 		if (Boss = GameObject.FindGameObjectWithTag("BigBoss")){
-			Boss.GetComponent<DamageScript> ().TakeDamage(damage);
+			Boss.GetComponent<DamageScript> ().TakeHealthDamage(damage);
 		}
 
+		//Camera Shake?
+		StopCoroutine("Shake");
+		SetShakeParam ();
+		StartCoroutine ("Shake", 2f);
+	}
+
+	IEnumerator Shake (float counter){
+
+		if (CamTransform == null) {
+			Debug.LogError("CamTransform should not be null");
+			yield break;
+		}
+
+		while (shake_intensity > 0 /*&& counter > 0*/){
+			CamTransform.position = originPosition + Random.insideUnitSphere * shake_intensity;
+			CamTransform.rotation = new Quaternion(
+				originRotation.x + Random.Range (-shake_intensity,shake_intensity) * .2f,
+				originRotation.y + Random.Range (-shake_intensity,shake_intensity) * .2f,
+				originRotation.z + Random.Range (-shake_intensity,shake_intensity) * .2f,
+				originRotation.w + Random.Range (-shake_intensity,shake_intensity) * .2f);
+			shake_intensity -= shake_decay;
+
+			//counter -= Time.deltaTime;
+			yield return null;
+		}
+
+		CamTransform.position = originPosition;
+		CamTransform.rotation = originRotation;
+	}
+
+	void ResetCamera()
+	{
+		if (CamTransform != null) {
+			CamTransform.position = originPosition;
+			CamTransform.rotation = originRotation;
+		} else {
+			Debug.LogError("CamTransform should not be null");
+		}
+	}
+
+	void SetShakeParam(){
+		ResetCamera ();
+
+		shake_intensity = 0.05f;
+		shake_decay = 0.0008f;
 	}
 
 }

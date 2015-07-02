@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
 	public GameObject DialogMgrGO;
 	private DialogManager dlgMgr = null;
 
+	public GameObject ExplosionGO;
+
 	public GameObject canvas;
 	public Text popupText;
 	public GameObject pauseUI;
@@ -449,6 +451,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		PickupManager.instance.spawnPickup (pos);
+		spawnExplosion (pos);
 
 		++destroyedEnemies;
 
@@ -457,6 +460,11 @@ public class GameManager : MonoBehaviour {
 			StartCoroutine("UpdateStage");
 		}
 
+	}
+
+	void spawnExplosion(Vector3 pos)
+	{
+		Instantiate (ExplosionGO, pos, Quaternion.identity);
 	}
 
 	void SpawnEnemies()

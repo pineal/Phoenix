@@ -13,7 +13,7 @@ public class HUDButtons : MonoBehaviour {
 
 	public void PrimaryWeaponChange()
 	{
-		GameManager.instance.playerGunMgr.GunType = (GameManager.instance.playerGunMgr.GunType + 1) % 2;
+		GameManager.instance.playerGunMgr.GunType = (GameManager.instance.playerGunMgr.GunType + 1) % 5;
 
 		PrimaryStats.ChangeButtonUI ();
 

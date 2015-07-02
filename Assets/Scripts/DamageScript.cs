@@ -103,24 +103,40 @@ public class DamageScript : MonoBehaviour {
 		case false:
 			if (collider.name.Substring (0, 4) == "Bull") {
 				BulletMove collidingBullet = collider.GetComponent<BulletMove> ();
-				int damage = collidingBullet.Damage;
+				float damage = collidingBullet.Damage * enemyAirScript.GetDamageFactor((GunManager.Bullet)collidingBullet.Type);
 
 				if(enemyAirScript != null)
 				{
 					health -= damage * enemyAirScript.GetDamageFactor((GunManager.Bullet)collidingBullet.Type);
+					//health -= damage;
 				}
 				else {
-					Debug.LogError("EnemyAriScript not detected.");
+					Debug.LogError("EnemyAirScript not detected.");
 				}
 
 				if (playerScript != null) {
+					playerScript.Score += (damage < 1f) ? 1 : (int)damage;
+				}
+			} else if(collider.name.Substring (0, 4) == "Expl"){
+				float damage = 0.05f * Time.deltaTime;
+
+				if(enemyAirScript != null)
+				{
+					health -= damage;
+				}
+				else {
+					Debug.LogError("EnemyAirScript not detected.");
+				}
+				
+				if (playerScript != null) {
 					playerScript.Score += damage;
 				}
+
 			} else {
 				health -= 3;
 
 				if (playerScript != null) {
-					playerScript.Score += 1;
+					playerScript.Score += 1f;
 				}
 			}
 			if(enemyAirScript != null)
@@ -129,7 +145,7 @@ public class DamageScript : MonoBehaviour {
 
 		case true:
 			if (collider.name.Substring (0, 4) == "Bull") {
-				int damage = collider.GetComponent<BulletMove> ().Damage;
+				float damage = collider.GetComponent<BulletMove> ().Damage;
 
 				if(shield > 0)		//Shield Exists
 				{
@@ -149,28 +165,30 @@ public class DamageScript : MonoBehaviour {
 					shield = 0;
 				}
 
+			} else if (collider.tag.Substring (0, 4) == "Expl") {
+				//Do Nothing
 			} else if (collider.tag.Substring (0, 4) != "Pick") {
 				if(shield > 0)		//Shield exists
 				{
 					shield -= 7;
 					StopCoroutine("ShieldRecharge");
 					StartCoroutine("ShieldRecharge");
-
+					
 				}
 				else 				//Shield is absent
 				{
 					health -= 7;
 				}
-
+				
 				if (shield < 0)		//Incase damage was more than shield capacity this frame;
 				{
 					health += shield;
 					shield = 0;
 				}
-//				if (playerScript != null) {
-//					playerScript.Score -= 5;
-//				}
-			}
+				//				if (playerScript != null) {
+				//					playerScript.Score -= 5;
+				//				}
+			} 
 			break;
 		}
 			
@@ -180,6 +198,66 @@ public class DamageScript : MonoBehaviour {
 		renderer.enabled = true;
 		StartCoroutine ( "Blink", timeToBlink );
 
+	}
+
+	void OnTriggerStay2D(Collider2D collider)
+	{
+		if (GameManager.instance.PlayMode != (int)GameManager.Mode.IN_STAGE)
+			return;
+
+		switch (isPlayer) {
+		case false:
+			if(collider.name.Substring (0, 4) == "Expl"){
+				float damage = 2f * Time.deltaTime;
+				
+				if(enemyAirScript != null)
+				{
+					health -= damage;
+				}
+				else {
+					Debug.LogError("EnemyAirScript not detected.");
+				}
+				
+				if (playerScript != null) {
+					playerScript.Score += damage;
+				}
+				
+			}
+
+			if(enemyAirScript != null)
+				enemyAirScript.CheckRotate();
+			break;
+			
+		case true:
+			if (collider.tag.Substring (0, 4) == "Expl") {
+				float damage = 3f * Time.deltaTime;
+				
+				if(shield > 0)		//Shield Exists
+				{
+					shield -= damage;
+					StopCoroutine("ShieldRecharge");
+					StartCoroutine("ShieldRecharge");
+				}
+				else 				//Shield is Absent
+				{
+					TakeHealthDamage(damage);
+				}
+				
+				
+				if(shield < 0) //Incase damage was more than shield capacity this frame;
+				{
+					health += shield;
+					shield = 0;
+				}
+			}
+			break;
+		}
+		
+//		timeToBlink = 2f;
+//		
+//		StopCoroutine("Blink");
+//		renderer.enabled = true;
+//		StartCoroutine ( "Blink", timeToBlink );
 	}
 
 	void Update() {
@@ -235,7 +313,7 @@ public class DamageScript : MonoBehaviour {
 		}
 	}
 
-	public void TakeDamage(float damage)
+	public void TakeHealthDamage(float damage)
 	{
 		if (health - damage < 0f) {
 			health = 0f;
@@ -249,6 +327,7 @@ public class DamageScript : MonoBehaviour {
 			HandleDamage (damage, DamageType.EXPLOSIVE);
 	}
 
+	//!!! Needs work here
 	public void HandleDamage(float damage, DamageType dmgType=DamageType.NORMAL)
 	{
 
