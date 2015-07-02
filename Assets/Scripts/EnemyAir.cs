@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyAir : MonoBehaviour {
 
@@ -40,6 +41,26 @@ public class EnemyAir : MonoBehaviour {
 		}
 	private bool flag = false;
 	Vector3 left, right, top;
+
+
+	//Bullet Damage Factors
+	public Dictionary<GunManager.Bullet, float> DamageFactor = new Dictionary<GunManager.Bullet, float>
+	{
+		{GunManager.Bullet.NORMAL	, 1f	}, 
+		{GunManager.Bullet.FIERY	, 0.7f	},
+		{GunManager.Bullet.CORROSIVE, 0.8f	},
+		{GunManager.Bullet.SHOCKER	, 0.8f	},
+		{GunManager.Bullet.CHILLER	, 0.6f	}
+	};
+
+	public float GetDamageFactor(GunManager.Bullet bulletType)
+	{
+		float factor = 0f;
+		if (DamageFactor.TryGetValue (bulletType, out factor))
+			return factor;
+		else
+			return 0f;
+	}
 
 	void Start()
 	{

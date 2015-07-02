@@ -78,14 +78,9 @@ public class PickupManager : MonoBehaviour {
 		}
 	}
 
-	public bool UpdateHealth(int health)
+	public bool UpdateHealth(int health)		//Only for Player: The one in DamageScript is generic
 	{
-		if (playerDamageScript.Health + health >= playerDamageScript.MaxHealth) {
-			playerDamageScript.Health = playerDamageScript.MaxHealth;
-		} 
-		else {
-			playerDamageScript.Health += health;
-		}
+		playerDamageScript.AddHealth ((float)health);
 
 		return true;
 	}
@@ -102,11 +97,11 @@ public class PickupManager : MonoBehaviour {
 		//	player = GameObject.Find("Enemy");
 		GameObject[] Enemies = GameObject.FindGameObjectsWithTag("EnemyAir");
 		foreach (GameObject enemy in Enemies){
-			enemy.GetComponent<DamageScript> ().Health -= damage;
+			enemy.GetComponent<DamageScript> ().TakeDamage(damage);
 		}
 		GameObject Boss;
 		if (Boss = GameObject.FindGameObjectWithTag("BigBoss")){
-			Boss.GetComponent<DamageScript> ().Health -= damage;
+			Boss.GetComponent<DamageScript> ().TakeDamage(damage);
 		}
 
 	}

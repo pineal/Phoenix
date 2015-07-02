@@ -37,7 +37,7 @@ public class PlayerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-
+		PausingDarkScreen.gameObject.SetActive (true);
 		initAlpha = PausingDarkScreen.color.a;		// 188/255
 		SetDarkScreenAlpha (0);
 
@@ -76,7 +76,7 @@ public class PlayerScript : MonoBehaviour {
 
 			Vector3 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
-			if(UI != null && UI.activeSelf && !CheckIfClickInRect(Input.mousePosition))
+			if(UI != null && (UI.activeSelf || Time.timeScale < 1f) && !CheckIfClickInRect(Input.mousePosition))
 			{
 				UI.SetActive (false);
 				Time.timeScale = 1f;
@@ -165,6 +165,11 @@ public class PlayerScript : MonoBehaviour {
 		Time.fixedDeltaTime = 0.02F * Time.timeScale;
 
 		//setDebugText ();
+		if (scoreText == null)
+			return;
+		else {
+			scoreText.text = score.ToString("D9");
+		}
 	}
 
 	private void SetDarkScreenAlpha(float alpha)

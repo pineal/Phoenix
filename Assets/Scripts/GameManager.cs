@@ -57,7 +57,6 @@ public class GameManager : MonoBehaviour {
 
 	private bool isPopupPublishing = false;
 
-
 	public enum Mode {NOT_IN_STAGE, IN_STAGE, LEVEL_WIN, LEVEL_LOSS, RESPAWNING, LEVEL_START, DIALOG_ACTIVE};
 
 	private Mode playMode;
@@ -579,7 +578,7 @@ public class GameManager : MonoBehaviour {
 	{
 		player.transform.position = playerSpawnPos;
 		//player.renderer.enabled = false;
-		player.GetComponent<DamageScript> ().Health = player.GetComponent<DamageScript>().MaxHealth;
+		player.GetComponent<DamageScript> ().RefillHealth();
 
 		while (isPopupPublishing)
 			yield return null;
