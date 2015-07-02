@@ -18,7 +18,7 @@ public class DamageScript : MonoBehaviour {
 	private float health = 20f;
 	public float Health{
 		get{ return health; }
-		set{ health = value; }
+		//set{ health = value; }
 	}
 
 	//Shield
@@ -54,6 +54,11 @@ public class DamageScript : MonoBehaviour {
 	private bool isBoss = false;
 
 	private Transform myTransform;
+
+	public enum DamageType {NORMAL, NEGATIVE, POSITIVE, EXPLOSIVE};
+
+	private DamageType type;
+
 
 	void Awake()
 	{
@@ -97,25 +102,22 @@ public class DamageScript : MonoBehaviour {
 		switch (isPlayer) {
 		case false:
 			if (collider.name.Substring (0, 4) == "Bull") {
-				int damage = collider.GetComponent<BulletMove> ().Damage;
+				BulletMove collidingBullet = collider.GetComponent<BulletMove> ();
+				int damage = collidingBullet.Damage;
 
-				if(shield > 0)
+				if(enemyAirScript != null)
 				{
-					shield -= damage;
-					StopCoroutine("ShieldRecharge");
-					StartCoroutine("ShieldRecharge");
+					health -= damage * enemyAirScript.GetDamageFactor((GunManager.Bullet)collidingBullet.Type);
 				}
-				else
-					health -= damage;
+				else {
+					Debug.LogError("EnemyAriScript not detected.");
+				}
 
 				if (playerScript != null) {
 					playerScript.Score += damage;
 				}
 			} else {
-				if (shield > 0)
-					shield -= 3;
-				else
-					health -= 3;
+				health -= 3;
 
 				if (playerScript != null) {
 					playerScript.Score += 1;
@@ -134,7 +136,6 @@ public class DamageScript : MonoBehaviour {
 					shield -= damage;
 					StopCoroutine("ShieldRecharge");
 					StartCoroutine("ShieldRecharge");
-
 				}
 				else 				//Shield is Absent
 				{
@@ -217,5 +218,39 @@ public class DamageScript : MonoBehaviour {
 		}	
 		else
 			GameManager.instance.GameOver ();
+	}
+
+	public void RefillHealth()
+	{
+		health = maxHealth;
+	}
+
+	public void AddHealth(float healthBoost)
+	{
+		if (health + healthBoost >= maxHealth) {
+			health = maxHealth;
+		}
+		else {
+			health += healthBoost;
+		}
+	}
+
+	public void TakeDamage(float damage)
+	{
+		if (health - damage < 0f) {
+			health = 0f;
+		} 
+		else {
+			health -= damage;
+		}
+
+
+		if (playerScript == null)
+			HandleDamage (damage, DamageType.EXPLOSIVE);
+	}
+
+	public void HandleDamage(float damage, DamageType dmgType=DamageType.NORMAL)
+	{
+
 	}
 }

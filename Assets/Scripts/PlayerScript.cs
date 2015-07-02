@@ -37,7 +37,7 @@ public class PlayerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-
+		PausingDarkScreen.gameObject.SetActive (true);
 		initAlpha = PausingDarkScreen.color.a;		// 188/255
 		SetDarkScreenAlpha (0);
 

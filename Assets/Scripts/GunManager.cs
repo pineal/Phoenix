@@ -8,7 +8,7 @@ public class GunManager : MonoBehaviour {
 	public float speed = 5f;
 	public int damage = 1;
 
-	private enum Bullet{NORMAL, CORROSIVE, SHOCKER, FIERY, CHILLER}
+	public enum Bullet{NORMAL, CORROSIVE, SHOCKER, FIERY, CHILLER}
 	private Bullet type = Bullet.NORMAL;		//0 - Normal ; 1 - Corrosion ; 2 - Electricity ; 3 - Fire ; 4 - Freeze
 	public int GunType{
 		get{ return (int)type; }
