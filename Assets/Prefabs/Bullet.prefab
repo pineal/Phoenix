@@ -14,7 +14,7 @@ GameObject:
   - 114: {fileID: 11460208}
   - 114: {fileID: 11460210}
   - 50: {fileID: 5049264}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet
   m_TagString: PlayerBullet00
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.4000001, z: 0}
+  m_LocalPosition: {x: 1.70000005, y: -10.8999996, z: 4}
   m_LocalScale: {x: .100000001, y: .100000001, z: .100000001}
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,8 +57,8 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Size: {x: 1, y: 1}
-  m_Center: {x: 0, y: 0}
+  m_Size: {x: 1.24000001, y: 5.11000013}
+  m_Center: {x: 0, y: .300000012}
 --- !u!95 &9558984
 Animator:
   serializedVersion: 3
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05088bea443b347ffaa7b848cf5c8b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 0
 --- !u!114 &11460210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -117,7 +117,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 4062046063
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300006, guid: c5205e9d842af407583a17e6dff424ca, type: 3}
+  m_Sprite: {fileID: 21300004, guid: 0d54e3c12eb1040e18bf3e6edb10c085, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

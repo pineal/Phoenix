@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Bullet_Corrosive_Prototype
+  m_Name: Bullet_Fiery
   serializedVersion: 4
   m_AnimationType: 2
   m_Compressed: 0
@@ -17,10 +17,10 @@ AnimationClip:
   m_FloatCurves: []
   m_PPtrCurves:
   - curve:
-    - time: -0
-      value: {fileID: 21300000, guid: 0d54e3c12eb1040e18bf3e6edb10c085, type: 3}
+    - time: 0
+      value: {fileID: 21300004, guid: 0d54e3c12eb1040e18bf3e6edb10c085, type: 3}
     - time: .0833333358
-      value: {fileID: 21300002, guid: 0d54e3c12eb1040e18bf3e6edb10c085, type: 3}
+      value: {fileID: 21300006, guid: 0d54e3c12eb1040e18bf3e6edb10c085, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -39,8 +39,8 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 0d54e3c12eb1040e18bf3e6edb10c085, type: 3}
-    - {fileID: 21300002, guid: 0d54e3c12eb1040e18bf3e6edb10c085, type: 3}
+    - {fileID: 21300004, guid: 0d54e3c12eb1040e18bf3e6edb10c085, type: 3}
+    - {fileID: 21300006, guid: 0d54e3c12eb1040e18bf3e6edb10c085, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_StartTime: 0

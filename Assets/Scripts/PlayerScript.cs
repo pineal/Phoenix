@@ -132,7 +132,7 @@ public class PlayerScript : MonoBehaviour {
 				//Check for Button
 			}
 
-		} else if (playMode == 1) {
+		} else if (playMode == (int)GameManager.Mode.IN_STAGE) {
 
 			SetDarkScreenAlpha( Mathf.Lerp(PausingDarkScreen.color.a, initAlpha, Time.deltaTime*4) );
 

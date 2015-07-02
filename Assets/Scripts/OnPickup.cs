@@ -14,17 +14,25 @@ public class OnPickup : MonoBehaviour {
 	private float rate = 0.2f;
 
 	string myTag;
+	private GameObject myGameObject;
+	private bool collectAll = false;
 
 	// Use this for initialization
 	void Start () {
-		Destroy (gameObject, 5f);
+		player = GameManager.instance.Player;
+		myGameObject = gameObject;
+		Invoke ("DestroyMe", 5f);
 		myTransform = transform;
 		origScale = myTransform.localScale.x;
-		myTag = this.tag;
+		myTag = myGameObject.tag;
 	}
 
 	private bool shrink = true;
 
+	void DestroyMe()
+	{
+		Destroy (myGameObject);
+	}
 
 	void Update()
 	{
@@ -33,7 +41,7 @@ public class OnPickup : MonoBehaviour {
 			return;
 
 		//Only for Health Pickup
-		if (pickup == 0) {
+		if (pickup == 0 && !collectAll) {
 			Vector3 scale = myTransform.localScale;
 
 			if (shrink) {
@@ -49,6 +57,20 @@ public class OnPickup : MonoBehaviour {
 			rate += (Time.deltaTime * 0.1f);
 			myTransform.localScale = scale;
 		}
+
+		// For Pickups to move towards players.
+		if (GameManager.instance.PlayMode == (int)GameManager.Mode.NOT_IN_STAGE && !collectAll)
+		{
+			CancelInvoke ("DestroyMe");
+			collectAll = true;
+			myTransform.localScale = new Vector3(origScale, myTransform.localScale.y, myTransform.localScale.z);
+
+		}
+
+		if (collectAll && player != null) {
+			myTransform.position = Vector3.Lerp(myTransform.position, player.transform.position, 0.1f);
+		}
+
 	}
 	
 	void OnTriggerEnter2D(Collider2D collider)

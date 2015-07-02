@@ -3,12 +3,25 @@ using System.Collections;
 
 public class GunManager : MonoBehaviour {
 
+	private float maxFireInterval = 0.055f;
+	private float maxSpeed = 15f;
+	private float maxDamage = 10f;
+	public float MaxFireInterval{
+		get{ return maxFireInterval; }
+	}
+	public float MaxSpeed{
+		get{ return maxSpeed; }
+	}
+	public float MaxDamage{
+		get{ return maxDamage; }
+	}
+
 	public float fireInterval = 0.1f;
 
 	public float speed = 5f;
 	public int damage = 1;
 
-	public enum Bullet{NORMAL, CORROSIVE, SHOCKER, FIERY, CHILLER}
+	public enum Bullet{NORMAL, CORROSIVE, SHOCKER, FIERY, CHILLER}		//Do not change. If you do, keep in mind the impact it will have in BulletAnimation
 	private Bullet type = Bullet.NORMAL;		//0 - Normal ; 1 - Corrosion ; 2 - Electricity ; 3 - Fire ; 4 - Freeze
 	public int GunType{
 		get{ return (int)type; }
@@ -60,6 +73,11 @@ public class GunManager : MonoBehaviour {
 			fireInterval = 0.25f;
 			speed = 10f;
 			damage = 1;
+
+//			fireInterval = MaxFireInterval;
+//			speed = MaxSpeed;
+//			damage = (int)MaxDamage;
+
 			prob = 0f;
 			burstAmt = 0;
 			burstInterval = 0.5f;
